@@ -1,0 +1,26 @@
+site/
+----/photo/
+----/admin/
+---- -----gestion_salle.php
+---- -----gestion_produit.php
+---- -----gestion_membre.php
+---- -----gestion_avis.php
+---- -----gestion_commande.php
+---- -----gestion_statistique.php
+----/inc/
+---- ----/img/
+---- ----/js/
+---- ----/css/
+---- ---- ----/style.php
+---- ----init.inc.php
+---- ----fonction.inc.php
+---- ----header.inc.php
+---- ----footer.inc.php
+-inscription.php
+-connexion.php
+-profil.php
+-accueil.php
+-fiche_produit.php
+-panier.php
+-.htaccess
+
