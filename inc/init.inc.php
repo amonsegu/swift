@@ -23,3 +23,6 @@ define('URL', 'http://swift/'); // lien absolu racine du projet
 define('SERVER_ROOT', $_SERVER['DOCUMENT_ROOT']);
 // Chemin racine du dossier du site depuis le serveur
 define('SITE_ROOT', '/swift/');
+
+//--------- AUTRES INCLUSIONS
+require_once("fonction.inc.php");

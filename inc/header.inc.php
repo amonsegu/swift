@@ -9,7 +9,7 @@
 </head>
 <body>
     <nav class="navbar navbar-expand-md navbar-dark bg-dark">
-    <a class="navbar-brand" href="#">Boutique démo PHP</a>
+    <a class="navbar-brand" href="#">Swift</a>
     <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarsExample04" aria-controls="navbarsExample04" aria-expanded="false" aria-label="Toggle navigation">
         <span class="navbar-toggler-icon"></span>
     </button>
@@ -77,9 +77,6 @@
         <?php endif; ?>
 
         </ul>
-        <form class="form-inline my-2 my-md-0">
-        <input class="form-control" type="text" placeholder="Search">
-        </form>
     </div>
     </nav>
     <main class="container-fluid" style="min-height: 800px;">
