@@ -1,17 +1,25 @@
 <?php
-//--------- BDD
-$mysqli = new mysqli("localhost", "root", "", "swift");
-if ($mysqli->connect_error) die('Un problème est survenu lors de la tentative de connexion à la BDD : ' . $mysqli->connect_error);
-// $mysqli->set_charset("utf8");
- 
-//--------- SESSION
+
+// Connexion à la BDD
+$host_db = 'mysql:host=localhost;dbname=swift'; 
+$login = 'root'; 
+$password = ''; 
+$options = array(
+				PDO::ATTR_ERRMODE => PDO::ERRMODE_WARNING, 
+				PDO::MYSQL_ATTR_INIT_COMMAND => 'SET NAMES utf8' 
+				);				
+$pdo = new PDO($host_db, $login, $password, $options);
+
+// Création d'une variable destinée à afficher des messages utilisateur
+$msg = "";
+
+// ouverture d'une session
 session_start();
- 
-//--------- CHEMIN
-define("RACINE_SITE","/swift/");
- 
-//--------- VARIABLES
-$contenu = '';
- 
-//--------- AUTRES INCLUSIONS
-require_once("fonction.inc.php");
+
+// déclaration de constante
+// URL racine du projet
+define('URL', 'http://swift/'); // lien absolu racine du projet
+// Chemin racine du serveur
+define('SERVER_ROOT', $_SERVER['DOCUMENT_ROOT']);
+// Chemin racine du dossier du site depuis le serveur
+define('SITE_ROOT', '/swift/');
