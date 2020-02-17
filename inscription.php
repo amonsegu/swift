@@ -130,7 +130,7 @@ require_once("inc/header.inc.php");
     </div>
     <div class="form-group col-md-6">
     <label for="date_enregistrement">Date de l'enregistrement</label>
-    <input type="date" class="form-control" id="date_enregistrement" name="date_enregistrement">
+    <input type="date" class="form-control" id="date_enregistrement" name="date_enregistrement" placeholder="<?php date("d-m-Y") ?>">
     </div>
 </div>
 <button type="submit" class="btn btn-dark">Inscription</button>
