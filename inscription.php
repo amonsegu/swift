@@ -73,8 +73,8 @@ if($_POST)
 
         $insert->execute();
 
-        //header('Location:connexion.php?inscription=valid'); // aprés l'inscription, on redirige l'internaute vers la page connexion
-        var_dump($_POST);
+        header('Location:connexion.php?inscription=valid'); // aprés l'inscription, on redirige l'internaute vers la page connexion
+        //var_dump($_POST);
     }
 }
     
