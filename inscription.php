@@ -47,21 +47,14 @@ if($_POST)
         $error = true;
     }
 
-    // 4.Le code postal doit être de type numérique et doit avoir une longueur de 5 caractères
-    if(strlen($code_postal) !== 5 || !is_numeric($code_postal))
-    {
-        $errorCp = '<p class="font-italic text-danger">Format code postal invalid</p>';
-        $error = true;
-    }
-
-    // 5.Informer l'internaute si les mots de passe ne correspondent pas
+    // 4.Informer l'internaute si les mots de passe ne correspondent pas
     if($mdp !== $mdp_confirm)
     {
         $errorMdp = '<p class="font-italic text-danger">Vérifier les mots de passe</p>';
         $error = true;
     }
     
-    // 6.Si l'internaute a correctement rempli le formulaire, on execute le requete d'insertion
+    // 5.Si l'internaute a correctement rempli le formulaire, on execute le requete d'insertion
     if(!isset($error))
     {
         $mdp = password_hash($mdp, PASSWORD_DEFAULT);
@@ -80,7 +73,8 @@ if($_POST)
 
         $insert->execute();
 
-        header('Location:connexion.php?inscription=valid'); // aprés l'inscription, on redirige l'internaute vers la page connexion
+        //header('Location:connexion.php?inscription=valid'); // aprés l'inscription, on redirige l'internaute vers la page connexion
+        var_dump($_POST);
     }
 }
     
