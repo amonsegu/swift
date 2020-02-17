@@ -61,7 +61,7 @@ if($_POST)
         // on ne conserve jamais les mots de passe en clair dans la BDD
         // password_hash() : fonction prédéfinie permettant de créer un clé de hachage à partir d'une chaine de caractères
 
-        $insert = $bdd->prepare("INSERT INTO membre (pseudo, mdp, nom, prenom, email, civilite,date_enregistrement) VALUES (:pseudo, :mdp, :nom, :prenom, :email, :civilite, :date_enregistrement)");
+        $insert = $bdd->prepare("INSERT INTO membre (pseudo, mdp, nom, prenom, email, civilite,statut,date_enregistrement) VALUES (:pseudo, :mdp, :nom, :prenom, :email, :civilite,0, now())");
 
         $insert->bindValue(':pseudo', $pseudo, PDO::PARAM_STR);
         $insert->bindValue(':mdp', $mdp, PDO::PARAM_STR);
@@ -69,7 +69,6 @@ if($_POST)
         $insert->bindValue(':prenom', $prenom, PDO::PARAM_STR);
         $insert->bindValue(':email', $email, PDO::PARAM_STR);
         $insert->bindValue(':civilite', $civilite, PDO::PARAM_STR);
-        $insert->bindValue(':date_enregistrement', $date_enregistrement, PDO::PARAM_STR);
 
         $insert->execute();
 
@@ -127,10 +126,6 @@ require_once("inc/header.inc.php");
     <div class="form-group col-md-6">
     <label for="nom">Nom</label>
     <input type="text" class="form-control" id="nom" name="nom">
-    </div>
-    <div class="form-group col-md-6">
-    <label for="date_enregistrement">Date de l'enregistrement</label>
-    <input type="date" class="form-control" id="date_enregistrement" name="date_enregistrement" placeholder="<?php date("d-m-Y") ?>">
     </div>
 </div>
 <button type="submit" class="btn btn-dark">Inscription</button>

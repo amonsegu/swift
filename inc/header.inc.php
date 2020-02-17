@@ -66,11 +66,14 @@
         <?php if(connecteAdmin()): // accés administrateur ?>
 
             <li class="nav-item dropdown">
-                <a class="nav-link dropdown-toggle" href="#" id="dropdown04" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">BACKOFFICE</a>
+                <a class="nav-link dropdown-toggle" href="#" id="dropdown04" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Administration</a>
                 <div class="dropdown-menu" aria-labelledby="dropdown04">
-                <a class="dropdown-item" href="<?= URL ?>admin/gestion_boutique.php">Gestion Boutique</a>
+                <a class="dropdown-item" href="<?= URL ?>admin/gestion_salle.php">Gestion salle</a>
+                <a class="dropdown-item" href="<?= URL ?>admin/gestion_produit.php">Gestion Produit</a>
                 <a class="dropdown-item" href="<?= URL ?>admin/gestion_membre.php">Gestion Membre</a>
+                <a class="dropdown-item" href="<?= URL ?>admin/gestion_avis.php">Gestion Avis</a>
                 <a class="dropdown-item" href="<?= URL ?>admin/gestion_commande.php">Gestion Commande</a>
+                <a class="dropdown-item" href="<?= URL ?>admin/gestion_statistique.php">Gestion Statistique</a>
                 </div>
             </li>
 
