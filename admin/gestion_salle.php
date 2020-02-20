@@ -66,7 +66,7 @@ if($_POST)
         else{
             // on renomme l'image avec la référence concaténé avec le nom du fichier 
             // on remplace les espaces par des tirets dans la référence (str_replace())
-            $nomphoto = str_replace(' ','-',$reference) . '-' . $_FILES['photo']['name'];
+            $nomphoto = str_replace(' ','-',$titre) . '-' . $_FILES['photo']['name'];
             //echo $nomphoto . '<hr>';
 
             //definition URL de l'image stockée en BDD
@@ -93,39 +93,39 @@ if($_POST)
 
         if(isset($_GET['action']) && $_GET['action'] == 'ajout')
         {
-        //requete d'insertion  ENREGISTREMENT PRODUIT   
-        $insert = $bdd->prepare("INSERT INTO salle (titre, description, photo, pays, ville, adresse, cp, capacite, categorie,) VALUES (:titre, :description, :photo, :pays, :ville, :adresse, :cp, :capacite, :categorie,)");
-        
+            //requete d'insertion  ENREGISTREMENT SALLE   
+            $insert = $bdd->prepare("INSERT INTO salle (titre, description, photo, pays, ville, adresse, cp, capacite, categorie) VALUES (:titre, :description, :photo, :pays, :ville, :adresse, :cp, :capacite, :categorie)");
+            
 
-        $_GET['action'] = 'affichage'; // Redéfini l'indice action en affichage pour qu'aprés modification du produit on revienne a l'affichage des produits 
+            $_GET['action'] = 'affichage'; // Redéfini l'indice action en affichage pour qu'aprés modification du produit on revienne a l'affichage des produits 
 
-        $validInsert = '<p class="col-md-6 p-3 rounded bg-success mx-auto text-white text-center">Le produit <strong>' . $reference . '</strong> à bien été enregistré </p>';
+            $validInsert = '<p class="col-md-6 p-3 rounded bg-success mx-auto text-white text-center">La salle <strong>' . $titre . '</strong> à bien été enregistré </p>';
         }
         else{
-            //requete d'update MODIFICATION PRODUIT
-            $insert = $bdd->prepare("UPDATE produit SET titre =:titre , description =:description , photo=:photo , pays=:pays , ville=:ville , adresse=:adresse , cp =:cp , capacite =:capacite , categorie=:categorie WHERE id_salle=:id_salle");
+            //requete d'update MODIFICATION SALLE
+            $insert = $bdd->prepare("UPDATE salle SET titre =:titre , description =:description , photo=:photo , pays=:pays , ville=:ville , adresse=:adresse , cp =:cp , capacite =:capacite , categorie=:categorie WHERE id_salle=:id_salle");
             $insert->bindValue(':id_salle',$_GET['id_salle'], PDO::PARAM_INT);
             
             $_GET['action'] = 'affichage';
-            $validUpdate = '<p class="col-md-6 p-3 rounded bg-success mx-auto text-white text-center">Le produit <strong>' . $reference . '</strong> à bien été modifié </p>';
+            $validUpdate = '<p class="col-md-6 p-3 rounded bg-success mx-auto text-white text-center">Le produit <strong>' . $titre . '</strong> à bien été modifié </p>';
             
         }
-        }
+    }
 
         $insert->bindValue(':titre',$titre, PDO::PARAM_STR);
         $insert->bindValue(':description', $description, PDO::PARAM_STR);
-        $insert->bindValue(':photo',$photobdd, PDO::PARAM_STR);
+        $insert->bindValue(':photo',$photoBdd, PDO::PARAM_STR);
         $insert->bindValue(':pays', $pays, PDO::PARAM_STR);
         $insert->bindValue(':ville', $ville, PDO::PARAM_STR);
         $insert->bindValue(':adresse', $adresse, PDO::PARAM_STR);
-        $insert->bindValue(':cp', $cp, PDO::PARAM_STR);
-        $insert->bindValue(':capacite', $capacite, PDO::PARAM_STR);
-        $insert->bindValue(':categorie', $categorie, PDO::PARAM_INT);
+        $insert->bindValue(':cp', $cp, PDO::PARAM_INT);
+        $insert->bindValue(':capacite', $capacite, PDO::PARAM_INT);
+        $insert->bindValue(':categorie', $categorie, PDO::PARAM_STR);
 
         $insert->execute();
 
         
-        
+        //echo '<pre>'; var_dump($_POST) ;echo'</pre>';
     }
 
 
@@ -149,7 +149,7 @@ require_once('../inc/header.inc.php');
 
 
 
-<!--------------- AFFICHAGE PRODUIT--------------------->
+<!--------------- AFFICHAGE SALLE--------------------->
 
 <?php if(isset($validsupp)) echo $validsupp ?>
 
@@ -187,14 +187,14 @@ if(isset($validUpdate)) echo $validUpdate;
         <?php endif; ?>
         <?php endforeach; ?>
         <!--On créer 2liens 'modification' et 'suppression' pour chaque produits en envoyant l'ID du produit dans l'URL-->
-                <td><a href="?action=modification&id_produit=<?=$products['id_salle']?>" class="btn btn-dark"> Modifier</a></td>
-                <td><a href="?action=suppression&id_produit=<?=$products['id_salle']?>" class="btn btn-danger"> Supprimer</a></td>
+                <td><a href="?action=modification&id_salle=<?=$products['id_salle']?>" class="btn btn-dark"> Modifier</a></td>
+                <td><a href="?action=suppression&id_salle=<?=$products['id_salle']?>" class="btn btn-danger"> Supprimer</a></td>
 
     </tr>
         <?php endwhile; ?>
 
 </table>
-<!------------------FIN AFFICHAGE PRODUIT------------------->
+<!------------------FIN AFFICHAGE SALLE------------------->
 <!--Balise de fermeture de la condition d'affichage 001-->
 <?php endif; ?>
 
@@ -223,85 +223,98 @@ si il y a action et ajout dans L'URL on lance le formulaire OU si dans l'url il 
 
 ?>
 
-<!---
-Formulaire table salle 
---->
+<!---Formulaire table salle --->
 
 <h3 class="display-4 text-center mt-2"><?= ucfirst($_GET['action']) ?> Salles</h3>
 <form class="container" action="#" method="POST" enctype="multipart/form-data" style="margin-top:35px; margin-bottom:35px;">
 <?php if (isset($validInsert)) echo $validInsert ?>
     
-
+<!-- TITRE DE LA SALLE-->
         <div class="form-group">        
-        <label style="margin-top:20px" for="reference" >Reference</label>
-        <input type="text" class="form-control" id="reference" placeholder="reference" name="reference" minlength=2 value="<?php if(isset($reference)) echo ("$reference") ?> ">
+        <label style="margin-top:20px" for="titre" >Titre</label>
+        <input type="text" class="form-control" id="titre" placeholder="titre" name="titre" minlength=2 value="<?php if(isset($titre)) echo ("$titre") ?> ">
         </div>    
       
-
+<!-- DESCRIPTION DE LA SALLE -->
         <div class="form-group">    
-        <label style="margin-top:20px" for="categorie">Categorie :</label>
-        <input type="text" class="form-control" id="categorie" placeholder="categorie" name="categorie" minlength=2 value="<?php if(isset($categorie)) echo ("$categorie") ?> ">
+        <label style="margin-top:20px" for="description">Description :</label>
+        <input type="text-area" class="form-control" id="description" placeholder="description" name="description" minlength=2 value="<?php if(isset($description)) echo ("$description") ?> ">
         </div>
 
-        <div class="form-group">    
-        <label for="titre" style="margin-top:20px">Titre :</label>
-        <input type="text" class="form-control" id="titre" placeholder="titre" name=titre minlength=2 value="<?php if(isset($titre)) echo ("$titre") ?> ">
-        </div>
 
-        <div class="form-group">    
-        <label for="description" style="margin-top:20px">description</label>
-        <input type="text" class="form-control" id="description" placeholder="description" name="description" value="<?php if(isset($description)) echo ("$description") ?> ">
-        </div>
-
-        <div class="form-group">    
-        <label for="couleur" style="margin-top:20px">Couleur</label>
-        <input type="text" class="form-control" id="couleur" placeholder="couleur" name="couleur" value="<?php if(isset($couleur)) echo ("$couleur") ?> ">
-        </div>
-
-        <div class="form-group">        
-        <label for="taille" style="margin-top:20px">Taille</label>
-        <select id="taille" name="taille" class="form-control">
-            <option value="S" <?php if(isset($taille) && $taille == "S") echo 'selected'?>>S</option>
-            <option value="M"  <?php if(isset($taille) && $taille == "M") echo 'selected'?>> M</option>
-            <option value="L"  <?php if(isset($taille) && $taille == "L") echo 'selected'?>> L</option>
-            <option value="XL"  <?php if(isset($taille) && $taille == "XL") echo 'selected'?>> XL</option>
-        </select>
-        </div>
-
-        <div class="form-group">        
-        <label for="public" style="margin-top:20px">public</label>
-        <select id="public" name="public" class="form-control">
-            <option value="m" <?php if(isset($public) && $public == "m") echo 'selected'?>>Homme</option>
-            <option value="f"  <?php if(isset($public) && $public == "f") echo 'selected'?>> >femme</option>
-        </select>
-        </div>
-
+<!--PHOTO DE LA SALLE -->
         <div class="form-group" style="margin-top:20px">
         <label for="photo" style="margin-top:20px">Photo:</label>
         <input type="file" id="photo" name="photo" accept="image/png, image/jpeg">
         <?php if(isset($errorUpload)) echo $errorUpload ?>
         </div>
 
-        <?php if(isset($photo) && !empty($photo)): ?>
+       <?php if(isset($photo) && !empty($photo)): ?>
             <div class="text-center">
             <em>Vous pouvez uploader une nouvelle photo si vous souhaitez la changer<em><br>
             <img src="<?= $photo?>" alt="<?= $titre ?>" class=" col-md-3 mx-auto">
             </div>
         <?php endif; ?>
 
-        <input type="hidden" name="photo_actuelle" value="<?php if(isset($photo)) echo $photo?>">
+      <input type="hidden" name="photo_actuelle" value="<?php if(isset($photo)) echo $photo?>">
 
+
+<!-- PAYS-->
         <div class="form-group">        
-        <label for="prix" style="margin-top:20px">Prix</label>
-        <input type="text"  class="form-control" id="prix" placeholder="prix" name="prix" value="<?php if(isset($prix)) echo ("$prix") ?> ">
-        </div>    
-
-        <div class="form-group">    
-        <label for="stock" style="margin-top:20px">Stock</label>
-        <input type="text"  class="form-control" id="stock" placeholder="stock" name="stock" value="<?php if(isset($stock)) echo ("$stock") ?> ">
+        <label for="pays" style="margin-top:20px">Pays</label>
+        <select id="pays" name="pays" class="form-control">
+            <option value="france" <?php if(isset($taille) && $taille == "france") echo 'selected'?>>france</option>
+            <option value="angleterre"  <?php if(isset($taille) && $taille == "angleterre") echo 'selected'?>> angleterre</option>
+            <option value="espagne"  <?php if(isset($taille) && $taille == "espagne") echo 'selected'?>> espagne</option>
+            <option value="allemagne"  <?php if(isset($taille) && $taille == "allemagne") echo 'selected'?>> allemagne</option>
+        </select>
         </div>
 
-        <button type="submit" class="btn btn-primary" style="margin:5px 0px 0px 0px"><?= ucfirst($_GET['action']) ?> Produit</button>
+
+<!--VILLE -->
+        <div class="form-group">        
+        <label for="ville" style="margin-top:20px">Ville</label>
+        <select id="ville" name="ville" class="form-control">
+            <option value="paris" <?php if(isset($taille) && $taille == "paris") echo 'selected'?>>paris</option>
+            <option value="marseille"  <?php if(isset($taille) && $taille == "marseille") echo 'selected'?>> marseille</option>
+            <option value="londre"  <?php if(isset($taille) && $taille == "londre") echo 'selected'?>> londre</option>
+            <option value="manchester"  <?php if(isset($taille) && $taille == "manchester") echo 'selected'?>> manchester</option>
+            <option value="madrid" <?php if(isset($taille) && $taille == "madrid") echo 'selected'?>>madrid</option>
+            <option value="barcelonne"  <?php if(isset($taille) && $taille == "barcelonne") echo 'selected'?>> barcelonne</option>
+            <option value="berlin"  <?php if(isset($taille) && $taille == "berlin") echo 'selected'?>> berlin</option>
+            <option value="francfort"  <?php if(isset($taille) && $taille == "francfort") echo 'selected'?>> francfort</option>
+        </select>
+        </div>
+
+<!-- ADRESSE DE LA SALLE-->
+<div class="form-group">        
+        <label style="margin-top:20px" for="adresse" >adresse</label>
+        <input type="text" class="form-control" id="adresse" placeholder="adresse" name="adresse" minlength=2 value="<?php if(isset($adresse)) echo ("$adresse") ?> ">
+        </div>   
+
+<!-- CP DE LA SALLE-->
+<div class="form-group">        
+        <label style="margin-top:20px" for="cp" >Code postal</label>
+        <input type="number" class="form-control" id="cp" placeholder="cp" name="cp" minlength=5 maxlength=5 value="<?php if(isset($cp)) echo ("$cp") ?> ">
+        </div>   
+
+<!-- CAPACITE DE LA SALLE-->
+<div class="form-group">        
+        <label style="margin-top:20px" for="capacite" >capacite</label>
+        <input type="number" class="form-control" id="capacite" placeholder="capacite" name="capacite" minlength=1 value="<?php if(isset($capacite)) echo ("$capacite") ?> ">
+        </div>   
+
+<!--CATEGORIE DE LA SALLE-->
+<div class="form-group">        
+        <label for="categorie" style="margin-top:20px">categorie</label>
+        <select id="categorie" name="categorie" class="form-control" value="NULL">
+            <option value="réunion" <?php if(isset($categorie) && $categorie == 'réunion') echo 'selected'?>>réunion</option>
+            <option value="bureau"  <?php if(isset($categorie) && $categorie == 'bureau') echo 'selected'?>>bureau</option>
+            <option value="formation"  <?php if(isset($categorie) && $categorie == 'formation') echo 'selected'?>>formation</option>
+        </select>
+</div>
+
+        <button type="submit" class="btn btn-primary" style="margin:5px 0px 0px 0px"><?= ucfirst($_GET['action']) ?> Salle</button>
 
 </form>
 
