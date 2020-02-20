@@ -66,7 +66,7 @@ if($_POST)
         else{
             // on renomme l'image avec la référence concaténé avec le nom du fichier 
             // on remplace les espaces par des tirets dans la référence (str_replace())
-            $nomphoto = str_replace(' ','-',$titre) . '-' . $_FILES['photo']['name'];
+            $nomphoto = str_replace(' ',' ',$titre) . '-' . $_FILES['photo']['name'];
             //echo $nomphoto . '<hr>';
 
             //definition URL de l'image stockée en BDD
