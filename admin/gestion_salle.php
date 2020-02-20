@@ -324,4 +324,3 @@ si il y a action et ajout dans L'URL on lance le formulaire OU si dans l'url il 
 //fin de la condition d'affichage du formulaire 002
 endif;
 require_once('../inc/footer.inc.php');
-
