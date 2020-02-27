@@ -12,14 +12,14 @@ if(!connecteAdmin())
 if (isset($_GET['action']) && $_GET['action'] == 'suppression')
 {
     //requete de suppression préparé
-    $supp = $bdd->prepare("DELETE FROM salle WHERE id_salle = :id_salle");
-    $supp->bindValue(':id_salle',$_GET['id_salle'], PDO::PARAM_INT);
+    $supp = $bdd->prepare("DELETE FROM produit WHERE id_produit = :id_produit");
+    $supp->bindValue(':id_produit',$_GET['id_produit'], PDO::PARAM_INT);
     // on envoie l'id_produit récupéré dans l'URL dans le marqueur :id_produit
     $supp->execute();
 
     $_GET['action'] = 'affichage' ; 
 
-    $validsupp = "<p class='col-md-6 p-3 rounded bg-success mx-auto text-white text-center'>Le produit <strong>ID $_GET[id_salle]</strong> a bien été supprimé </p>";
+    $validsupp = "<p class='col-md-6 p-3 rounded bg-success mx-auto text-white text-center'>Le produit <strong>ID $_GET[id_produit]</strong> a bien été supprimé </p>";
 }
 
 if($_POST)
@@ -34,7 +34,7 @@ if($_POST)
     {
         if(isset($_GET['action']) && $_GET['action'] == 'ajout')
         {
-            //requete d'insertion  ENREGISTREMENT SALLE   
+            //requete d'insertion  ENREGISTREMENT produit   
             $insert = $bdd->prepare("INSERT INTO produit (id_salle, date_arrivee, date_depart, prix, etat) VALUES (:id_salle, :date_arrivee, :date_depart, :prix, :etat)");
             
 
@@ -43,7 +43,7 @@ if($_POST)
             $validInsert = '<p class="col-md-6 p-3 rounded bg-success mx-auto text-white text-center">Le produit à bien été enregistré </p>';
         }
         else{
-            //requete d'update MODIFICATION SALLE
+            //requete d'update MODIFICATION produit
             $insert = $bdd->prepare("UPDATE produit SET id_salle =:id_salle , date_arrivee =:date_arrivee , date_depart=:date_depart , prix=:prix , etat=:etat WHERE id_produit=:id_produit");
             $insert->bindValue(':id_produit',$_GET['id_produit'], PDO::PARAM_INT);
             
@@ -90,7 +90,7 @@ if(isset($validUpdate)) echo $validUpdate;
 
 <table class="table table-bordered text-center"><tr>
 <?php 
-//columnCount() : méthode PDOStatement qui retourne le nombde de colonne selectionné dans la requete SELECT
+//columnCount() : méthode PDOStatement qui retourne le nombre de colonne selectionné dans la requete SELECT
         for ($i = 0; $i < $data->columnCount(); $i++):
             //getColumnMeta() : permet de recolter les informations liés aux champs/colonne de la table (primary key, not null, nom du champs..)
         $colonne = $data->getColumnMeta($i) 
@@ -155,28 +155,45 @@ si il y a action et ajout dans L'URL on lance le formulaire OU si dans l'url il 
 <h3 class="display-4 text-center mt-2"><?= ucfirst($_GET['action']) ?> Produit</h3>
 <form class="container" action="#" method="POST" enctype="multipart/form-data" style="margin-top:35px; margin-bottom:35px;">
 <?php if (isset($validInsert)) echo $validInsert ?>
-    
+
+<!--Requete de d'affichage salle-->
+<?php $datasalle = $bdd ->query("SELECT * FROM salle ORDER BY id_salle");
+//$cat = $datasalle2->fetch(PDO::FETCH_ASSOC);
+//echo '<pre>'; var_dump($cat);echo'</pre>';
+//echo 'salle numéro : ' . $cat['id_salle']  . ' nom : ' . $cat['titre'] . '    '. $cat['adresse'] .  '    '.  $cat['ville'] .  '    ' . $cat['cp'] . ' capacité : ' . $cat['capacite'] . '  catégorie :  ' . $cat['categorie'] ;
+ ?>
+
 <!-- SALLE-->
-        <div class="form-group">        
+        <div class="form-group"> 
+
         <label for="id_salle" style="margin-top:20px">salle</label>
         <select id="id_salle" name="id_salle" class="form-control">
-            <option value="6" <?php if(isset($taille) && $taille == "6") echo 'selected'?>>Cezanne</option>
-            <option value="7"  <?php if(isset($taille) && $taille == "7") echo 'selected'?>> Mozart</option>
-            <option value="8"  <?php if(isset($taille) && $taille == "8") echo 'selected'?>> Verdi</option>
-            <option value="9"  <?php if(isset($taille) && $taille == "9") echo 'selected'?>> Bach</option>
+
+           <?php
+                while($cat = $datasalle->fetch(PDO::FETCH_ASSOC)):
+            ?>
+                <option value='<?php echo (int)$cat['id_salle'] ?>'>
+                <?php
+                echo' nom : ' . $cat['titre'] . '    '. $cat['adresse'] .  '    '.  $cat['ville'] .  '    ' . $cat['cp'] . ' capacité : ' . $cat['capacite'] . '  catégorie :  ' . $cat['categorie'] ;
+                ?>
+                </option>
+            <?php endwhile; ?>  
+
+
+            
         </select>
         </div>
 
 <!-- DATE ARRIVEE-->
 <div class="form-group">        
         <label style="margin-top:20px" for="date_arrivee" >Date d'arrivée</label>
-        <input type="date" class="form-control" id="date_arrivee"  name="date_arrivee">
+        <input type="datetime-local" class="form-control" id="date_arrivee"  name="date_arrivee">
         </div>    
       
 <!-- DATE DEPART -->
 <div class="form-group">        
         <label style="margin-top:20px" for="date_depart" >Date de départ</label>
-        <input type="date" class="form-control" id="date_depart"  name="date_depart">
+        <input type="datetime-local" class="form-control" id="date_depart"  name="date_depart">
         </div>   
 
 <!-- CP DE LA SALLE-->

@@ -133,7 +133,7 @@ if($_POST)
 require_once('../inc/header.inc.php');
 ?>
 
-<!-- AFFICHAGE LIENS MENU PRODUIT -->
+<!-- AFFICHAGE LIENS MENU GESTION SALLE -->
 <div><p class="col-md-4 offset-md-4 bg-secondary text-center rounded text-white mt-2 p-3">BACKOFFICE</p></div>
 <div><a href="?action=affichage" class="col-md-4 offset-md-4 btn btn-info p-2 mb-1 mt-3">AFFICHAGE DES SALLES</a></div>
 <div><a href="?action=ajout" class="col-md-4 offset-md-4 btn btn-info p-2 my-1">AJOUTER UNE SALLE</a></div>
