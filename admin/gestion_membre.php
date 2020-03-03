@@ -37,7 +37,7 @@ if($_POST)
 
     if (!isset($error))
     {
-
+        $mdp = password_hash($mdp, PASSWORD_DEFAULT);
         if(isset($_GET['action']) && $_GET['action'] == 'ajout')
         {
             //requete d'insertion  ENREGISTREMENT SALLE   
@@ -88,7 +88,7 @@ require_once('../inc/header.inc.php');
 <?php if(isset($_GET['action']) && $_GET['action'] == 'affichage'): ?>
 
 <!--Requete de selection salle-->
-<?php $data = $bdd ->query("SELECT * FROM membre ORDER BY id_membre"); ?>
+<?php $data = $bdd ->query("SELECT id_membre, pseudo, prenom, email, civilite, statut, date_enregistrement FROM membre ORDER BY id_membre"); ?>
 
 
 
