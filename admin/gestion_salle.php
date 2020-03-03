@@ -7,10 +7,10 @@ if(!connecteAdmin())
     header('Location:' . URL . 'connexion.php' );
 }
 
-//----------------------SUPPRESSION PRODUIT 
+//----------------------SUPPRESSION SALLE 
 if (isset($_GET['action']) && $_GET['action'] == 'suppression')
 {
-    //realiser le script permettant de supprimer un produit avec une requete préparée
+
 
 
     //requete de suppression préparé
@@ -34,7 +34,8 @@ if($_POST)
     $photoBdd ='';
     if(isset($_GET['action']) && $_GET['action'] == 'modification')
     {
-        $photoBdd = $photo_actuelle; // si on souhaite conserver le même photo en cas de modification, on affecte la valeur du champ type hidden, c'est a dure l'url de la photo actuelle en bdd
+         // si on souhaite conserver le même photo en cas de modification, on affecte la valeur du champ type hidden, c'est a dire l'url de la photo actuelle en bdd
+        $photoBdd = $photo_actuelle;
     }
 
     $errorUpload = '';
@@ -143,7 +144,7 @@ require_once('../inc/header.inc.php');
 <!--001 Si l'indice 'action' est définit dans l'URL et a pour valeur 'affichage', alors on entre dans la condition et on execute le code de l'affichage des produits, on entre dans le IF seulement dans le cas ou l'on a cliqué sur le lien 'AFFICHAGE DES PRODUITS' (ci dessus) -->
 <?php if(isset($_GET['action']) && $_GET['action'] == 'affichage'): ?>
 
-<!--Requete de selection produit-->
+<!--Requete de selection salle-->
 <?php $data = $bdd ->query("SELECT * FROM salle ORDER BY id_salle"); ?>
 
 
@@ -163,7 +164,7 @@ if(isset($validUpdate)) echo $validUpdate;
 
 <table class="table table-bordered text-center"><tr>
 <?php 
-//columnCount() : méthode PDOStatement qui retourne le nombde de colonne selectionné dans la requete SELECT
+//columnCount() : méthode PDOStatement qui retourne le nombre de colonne selectionné dans la requete SELECT
         for ($i = 0; $i < $data->columnCount(); $i++):
             //getColumnMeta() : permet de recolter les informations liés aux champs/colonne de la table (primary key, not null, nom du champs..)
         $colonne = $data->getColumnMeta($i) 
@@ -173,7 +174,7 @@ if(isset($validUpdate)) echo $validUpdate;
         <th>Edit</th>
         <th>Supp</th>
     </tr>
-    <!--On associe la méthode fetch à l'objet PDOStatement, ce qui retourne un ARRAY d'1 produit par tour de boucle WHILE-->
+    <!--On associe la méthode fetch à l'objet PDOStatement, ce qui retourne un ARRAY d'un produit par tour de boucle WHILE-->
     <?php while($products = $data->fetch(PDO::FETCH_ASSOC)): ?>
         <tr>
         <!--La boucle foreach passe en revue chaque tableau ARRAY de chaque produits-->
@@ -199,7 +200,7 @@ if(isset($validUpdate)) echo $validUpdate;
 <?php endif; ?>
 
 
-<!--Condition d'affichage du formulaire 002  la valeur "ajout" est defini dans les liens AFFICHAGE LIENS MENU PRODUIT
+<!--Condition d'affichage du formulaire 002  la valeur "ajout" est defini dans les liens AFFICHAGE 
 si il y a action et ajout dans L'URL on lance le formulaire OU si dans l'url il y a action et modification on lance le meme formulaire-->
 <?php if(isset($_GET['action']) && ($_GET['action'] == 'ajout' || $_GET['action'] == 'modification')): 
     
