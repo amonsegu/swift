@@ -46,9 +46,12 @@ on entre dans le IF seulement dans le cas ou l'on a cliqué sur le lien 'AFFICHA
 <?php if(isset($_GET['action']) && $_GET['action'] == 'affichage'): ?>
 
 <!--Requete de selection des commandes-->
-<?php $data = $bdd ->query("SELECT commande.id_commande, commande.id_membre, commande.id_produit, produit.prix, commande.date_enregistrement 
-FROM commande LEFT JOIN produit 
+<?php $data = $bdd ->query("SELECT commande.id_commande, commande.id_membre, membre.email,  commande.id_produit, produit.prix, commande.date_enregistrement 
+FROM commande
+LEFT JOIN produit 
 ON commande.id_produit = produit.id_produit
+LEFT JOIN MEMBRE
+ON commande.id_membre = membre.id_membre
 ORDER BY commande.id_commande;"); ?>
 
 <!--------------- AFFICHAGE DES COMMANDES--------------------->
