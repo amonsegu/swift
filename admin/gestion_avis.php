@@ -7,7 +7,7 @@ if(!connecteAdmin())
     header('Location:' . URL . 'connexion.php' );
 }
 
-//----------------------SUPPRESSION COMMENTAIRE 
+//----------------------SUPPRESSION AVIS 
 if (isset($_GET['action']) && $_GET['action'] == 'suppression')
 {
 
@@ -34,7 +34,7 @@ if (isset($_GET['action']) && $_GET['action'] == 'suppression')
 require_once('../inc/header.inc.php');
 ?>
 
-<!-- AFFICHAGE LIENS MENU GESTION SALLE -->
+<!-- AFFICHAGE LIEN MENU GESTION DES AVIS -->
 <div><p class="col-md-4 offset-md-4 bg-secondary text-center rounded text-white mt-2 p-3">BACKOFFICE</p></div>
 <div><a href="?action=affichage" class="col-md-4 offset-md-4 btn btn-info p-2 mb-1 mt-3">AFFICHAGE DES AVIS</a></div>
 
