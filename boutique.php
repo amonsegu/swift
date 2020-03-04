@@ -22,10 +22,10 @@ if(isset($_GET['etat']))
 }else // si il n'y a pas de catégories dans l'URL, nous selectionons l'ensemble des produits
 {
     $data = $bdd->query("SELECT salle.id_salle, salle.titre, salle.description, salle.photo, salle.pays, salle.ville, salle.adresse, salle.cp, salle.capacite, salle.categorie, produit.id_produit,  produit.date_arrivee, produit.date_depart, produit.prix, produit.etat 
-    FROM salle
-    LEFT JOIN produit 
-    ON salle.id_salle = produit.id_salle
-    ORDER BY salle.id_salle;");
+    FROM produit
+    LEFT JOIN salle 
+    ON produit.id_salle = salle.id_salle
+    ORDER BY produit.id_produit;");
     $produits = $data->fetchALL(PDO::FETCH_ASSOC);
 }
 require_once('inc/header.inc.php');
