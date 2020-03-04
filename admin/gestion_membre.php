@@ -7,7 +7,7 @@ if(!connecteAdmin())
     header('Location:' . URL . 'connexion.php' );
 }
 
-//----------------------SUPPRESSION SALLE 
+//----------------------SUPPRESSION MEMBRE 
 if (isset($_GET['action']) && $_GET['action'] == 'suppression')
 {
 
@@ -16,7 +16,7 @@ if (isset($_GET['action']) && $_GET['action'] == 'suppression')
     //requete de suppression préparé
     $supp = $bdd->prepare("DELETE FROM membre WHERE id_membre = :id_membre");
     $supp->bindValue(':id_membre',$_GET['id_membre'], PDO::PARAM_INT);
-    // on envoie l'id_produit récupéré dans l'URL dans le marqueur :id_produit
+    // on envoie l'id_membre récupéré dans l'URL dans le marqueur :id_membre
     $supp->execute();
 
     $_GET['action'] = 'affichage' ; 
@@ -40,16 +40,16 @@ if($_POST)
         $mdp = password_hash($mdp, PASSWORD_DEFAULT);
         if(isset($_GET['action']) && $_GET['action'] == 'ajout')
         {
-            //requete d'insertion  ENREGISTREMENT SALLE   
+            //requete d'insertion  ENREGISTREMENT MEMBRE   
             $insert = $bdd->prepare("INSERT INTO membre (pseudo, mdp, nom, prenom, email, civilite,statut,date_enregistrement) VALUES (:pseudo, :mdp, :nom, :prenom, :email, :civilite,0, now())");
             
 
-            $_GET['action'] = 'affichage'; // Redéfini l'indice action en affichage pour qu'aprés modification du produit on revienne a l'affichage des produits 
+            $_GET['action'] = 'affichage'; // Redéfini l'indice action en affichage pour qu'aprés modification du membre on revienne a l'affichage des membres 
 
             $validInsert = '<p class="col-md-6 p-3 rounded bg-success mx-auto text-white text-center">La membre <strong>' . $pseudo . '</strong> à bien été enregistré </p>';
         }
         else{
-            //requete d'update MODIFICATION SALLE
+            //requete d'update MODIFICATION MEMBRE
             $insert = $bdd->prepare("UPDATE membre SET pseudo=:pseudo , mdp=:mdp , nom=:nom , prenom=:prenom , email=:email , civilite=:civilite WHERE id_membre=:id_membre");
             $insert->bindValue(':id_membre',$_GET['id_membre'], PDO::PARAM_INT);
             
@@ -77,23 +77,24 @@ if($_POST)
 require_once('../inc/header.inc.php');
 ?>
 
-<!-- AFFICHAGE LIENS MENU GESTION SALLE -->
+<!-- AFFICHAGE LIENS MENU GESTION MEMBRE -->
 <div><p class="col-md-4 offset-md-4 bg-secondary text-center rounded text-white mt-2 p-3">BACKOFFICE</p></div>
 <div><a href="?action=affichage" class="col-md-4 offset-md-4 btn btn-info p-2 mb-1 mt-3">AFFICHAGE DES MEMBRES</a></div>
 <div><a href="?action=ajout" class="col-md-4 offset-md-4 btn btn-info p-2 my-1">AJOUTER UN MEMBRE</a></div>
 
 
 
-<!--001 Si l'indice 'action' est définit dans l'URL et a pour valeur 'affichage', alors on entre dans la condition et on execute le code de l'affichage des produits, on entre dans le IF seulement dans le cas ou l'on a cliqué sur le lien 'AFFICHAGE DES PRODUITS' (ci dessus) -->
+<!--001 Si l'indice 'action' est définit dans l'URL et a pour valeur 'affichage', alors on entre dans la condition et on execute le code de l'affichage des membres
+ on entre dans le IF seulement dans le cas ou l'on a cliqué sur le lien 'AFFICHAGE DES MEMBRES' (ci dessus) -->
 <?php if(isset($_GET['action']) && $_GET['action'] == 'affichage'): ?>
 
-<!--Requete de selection salle-->
+<!--Requete de selection membre-->
 <?php $data = $bdd ->query("SELECT id_membre, pseudo, prenom, email, civilite, statut, date_enregistrement FROM membre ORDER BY id_membre"); ?>
 
 
 
 
-<!--------------- AFFICHAGE SALLE--------------------->
+<!--------------- AFFICHAGE MEMBRES--------------------->
 
 <?php if(isset($validsupp)) echo $validsupp ?>
 
@@ -104,31 +105,29 @@ if(isset($validDelete)) echo $validDelete;
 if(isset($validInsert)) echo $validInsert;
 if(isset($validUpdate)) echo $validUpdate; 
 ?>
-
-<table class="table table-bordered text-center"><tr>
-<?php 
-//columnCount() : méthode PDOStatement qui retourne le nombre de colonne selectionné dans la requete SELECT
-        for ($i = 0; $i < $data->columnCount(); $i++):
-            //getColumnMeta() : permet de recolter les informations liés aux champs/colonne de la table (primary key, not null, nom du champs..)
-        $colonne = $data->getColumnMeta($i) 
-        ?>
-        <th><?= $colonne['name'] // on va crocheter à l'indice 'name' afin d'afficher chaque nom de colonne dans les entetes du tableau?></th>
-        <?php endfor; ?>
-        <th>Edit</th>
-        <th>Supp</th>
+<div class="container col-12 overflow-auto">
+<table  id="opentable" class="table table-striped table-bordered text-center" style="width:100%">
+<thead>
+    <tr>
+        <?php 
+        //columnCount() : méthode PDOStatement qui retourne le nombre de colonne selectionné dans la requete SELECT
+                for ($i = 0; $i < $data->columnCount(); $i++):
+                    //getColumnMeta() : permet de recolter les informations liés aux champs/colonne de la table (primary key, not null, nom du champs..)
+                $colonne = $data->getColumnMeta($i) 
+                ?>
+                <th><?= $colonne['name'] // on va crocheter à l'indice 'name' afin d'afficher chaque nom de colonne dans les entetes du tableau?></th>
+                <?php endfor; ?>
+                <th>Edit</th>
+                <th>Supp</th>
     </tr>
+    </thead>
+    <tbody>
     <!--On associe la méthode fetch à l'objet PDOStatement, ce qui retourne un ARRAY d'un produit par tour de boucle WHILE-->
     <?php while($products = $data->fetch(PDO::FETCH_ASSOC)): ?>
         <tr>
         <!--La boucle foreach passe en revue chaque tableau ARRAY de chaque produits-->
         <?php foreach($products as $key => $value): ?>
-
-            <!--Si l'indice du tableau est 'photo' on envoi l'URL de l'image dans l'attribut 'src' de la balise 'img' afin d'afficher l'image et pas l'URL de l'image-->
-        <?php if($key == 'photo'): ?>
-        <td><img src="<?= $value ?>" alt="" style="width : 100px;"></td>
-        <?php else: //sinon on affiche chaque donnée normalement dans des cellules <td>?> 
             <td><?= $value ?></td>
-        <?php endif; ?>
         <?php endforeach; ?>
         <!--On créer 2liens 'modification' et 'suppression' pour chaque produits en envoyant l'ID du produit dans l'URL-->
                 <td><a href="?action=modification&id_membre=<?=$products['id_membre']?>" class="btn btn-dark"> Modifier</a></td>
@@ -136,8 +135,9 @@ if(isset($validUpdate)) echo $validUpdate;
 
     </tr>
         <?php endwhile; ?>
-
+</tbody>
 </table>
+</div>
 <!------------------FIN AFFICHAGE SALLE------------------->
 <!--Balise de fermeture de la condition d'affichage 001-->
 <?php endif; ?>

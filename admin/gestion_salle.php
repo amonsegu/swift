@@ -161,19 +161,23 @@ if(isset($validDelete)) echo $validDelete;
 if(isset($validInsert)) echo $validInsert;
 if(isset($validUpdate)) echo $validUpdate; 
 ?>
-
-<table class="table table-bordered text-center"><tr>
-<?php 
-//columnCount() : méthode PDOStatement qui retourne le nombre de colonne selectionné dans la requete SELECT
-        for ($i = 0; $i < $data->columnCount(); $i++):
-            //getColumnMeta() : permet de recolter les informations liés aux champs/colonne de la table (primary key, not null, nom du champs..)
-        $colonne = $data->getColumnMeta($i) 
-        ?>
-        <th><?= $colonne['name'] // on va crocheter à l'indice 'name' afin d'afficher chaque nom de colonne dans les entetes du tableau?></th>
-        <?php endfor; ?>
-        <th>Edit</th>
-        <th>Supp</th>
-    </tr>
+<div class="container col-12 overflow-auto">
+<table  id="opentable" class="table table-striped table-bordered text-center" style="width:100%">
+    <thead>
+        <tr>
+            <?php 
+            //columnCount() : méthode PDOStatement qui retourne le nombre de colonne selectionné dans la requete SELECT
+                    for ($i = 0; $i < $data->columnCount(); $i++):
+                        //getColumnMeta() : permet de recolter les informations liés aux champs/colonne de la table (primary key, not null, nom du champs..)
+                    $colonne = $data->getColumnMeta($i) 
+                    ?>
+                    <th><?= $colonne['name'] // on va crocheter à l'indice 'name' afin d'afficher chaque nom de colonne dans les entetes du tableau?></th>
+                    <?php endfor; ?>
+                    <th>Edit</th>
+                    <th>Supp</th>
+        </tr>
+    </thead>
+    <tbody>
     <!--On associe la méthode fetch à l'objet PDOStatement, ce qui retourne un ARRAY d'un produit par tour de boucle WHILE-->
     <?php while($products = $data->fetch(PDO::FETCH_ASSOC)): ?>
         <tr>
@@ -193,8 +197,9 @@ if(isset($validUpdate)) echo $validUpdate;
 
     </tr>
         <?php endwhile; ?>
-
+</tbody>
 </table>
+</div>
 <!------------------FIN AFFICHAGE SALLE------------------->
 <!--Balise de fermeture de la condition d'affichage 001-->
 <?php endif; ?>

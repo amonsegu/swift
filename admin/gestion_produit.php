@@ -76,7 +76,7 @@ require_once('../inc/header.inc.php');
 <!--Requete de selection produit-->
 <?php $data = $bdd ->query("SELECT * FROM produit ORDER BY id_produit"); ?>
 
-<!--------------- AFFICHAGE SALLE--------------------->
+<!--------------- AFFICHAGE PRODUIT--------------------->
 
 <?php if(isset($validsupp)) echo $validsupp ?>
 
@@ -88,7 +88,8 @@ if(isset($validInsert)) echo $validInsert;
 if(isset($validUpdate)) echo $validUpdate; 
 ?>
 
-<table class="table table-bordered text-center"><tr>
+<div class="container col-12 overflow-auto">
+<table class="table display table-bordered text-center" id="opentable"><thead><tr>
 <?php 
 //columnCount() : méthode PDOStatement qui retourne le nombre de colonne selectionné dans la requete SELECT
         for ($i = 0; $i < $data->columnCount(); $i++):
@@ -96,31 +97,27 @@ if(isset($validUpdate)) echo $validUpdate;
         $colonne = $data->getColumnMeta($i) 
         ?>
         <th><?= $colonne['name'] // on va crocheter à l'indice 'name' afin d'afficher chaque nom de colonne dans les entetes du tableau?></th>
-        <?php endfor; ?>
+<?php endfor; ?>
         <th>Edit</th>
         <th>Supp</th>
     </tr>
+</thead>
+<tbody>
     <!--On associe la méthode fetch à l'objet PDOStatement, ce qui retourne un ARRAY d'1 produit par tour de boucle WHILE-->
     <?php while($products = $data->fetch(PDO::FETCH_ASSOC)): ?>
         <tr>
-        <!--La boucle foreach passe en revue chaque tableau ARRAY de chaque produits-->
-        <?php foreach($products as $key => $value): ?>
-
-            <!--Si l'indice du tableau est 'photo' on envoi l'URL de l'image dans l'attribut 'src' de la balise 'img' afin d'afficher l'image et pas l'URL de l'image-->
-        <?php if($key == 'photo'): ?>
-        <td><img src="<?= $value ?>" alt="" style="width : 100px;"></td>
-        <?php else: //sinon on affiche chaque donnée normalement dans des cellules <td>?> 
-            <td><?= $value ?></td>
-        <?php endif; ?>
-        <?php endforeach; ?>
+            <!--La boucle foreach passe en revue chaque tableau ARRAY de chaque produits-->
+            <?php foreach($products as $key => $value): ?>
+                    <td><?= $value ?></td>
+            <?php endforeach; ?>
         <!--On créer 2liens 'modification' et 'suppression' pour chaque produits en envoyant l'ID du produit dans l'URL-->
-                <td><a href="?action=modification&id_produit=<?=$products['id_produit']?>" class="btn btn-dark"> Modifier</a></td>
-                <td><a href="?action=suppression&id_produit=<?=$products['id_produit']?>" class="btn btn-danger"> Supprimer</a></td>
-
-    </tr>
+            <td><a href="?action=modification&id_produit=<?=$products['id_produit']?>" class="btn btn-dark"> Modifier</a></td>
+            <td><a href="?action=suppression&id_produit=<?=$products['id_produit']?>" class="btn btn-danger"> Supprimer</a></td>
+        </tr>
         <?php endwhile; ?>
-
+</tbody>
 </table>
+</div>
 <!------------------FIN AFFICHAGE SALLE------------------->
 <!--Balise de fermeture de la condition d'affichage 001-->
 <?php endif; ?>
@@ -214,8 +211,6 @@ si il y a action et ajout dans L'URL on lance le formulaire OU si dans l'url il 
         <button type="submit" class="btn btn-primary" style="margin:5px 0px 0px 0px"><?= ucfirst($_GET['action']) ?> Produit</button>
 
 </form>
-
-
 </main>
 <?php 
 //fin de la condition d'affichage du formulaire 002
