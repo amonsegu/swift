@@ -186,7 +186,11 @@ if(isset($validUpdate)) echo $validUpdate;
 
             <!--Si l'indice du tableau est 'photo' on envoi l'URL de l'image dans l'attribut 'src' de la balise 'img' afin d'afficher l'image et pas l'URL de l'image-->
         <?php if($key == 'photo'): ?>
-        <td><img src="<?= $value ?>" alt="" style="width : 100px;"></td>
+        <td>
+            <a data-fancybox="<?= $value ?>" href="<?= $value ?>">
+                <img src="<?= $value ?>" alt="" style="width : 100px;">
+            </a>
+         </td>
         <?php else: //sinon on affiche chaque donnée normalement dans des cellules <td>?> 
             <td><?= $value ?></td>
         <?php endif; ?>

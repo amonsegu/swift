@@ -62,38 +62,36 @@ if(isset($validDelete)) echo $validDelete;
 if(isset($validInsert)) echo $validInsert;
 if(isset($validUpdate)) echo $validUpdate; 
 ?>
-
-<table class="table table-bordered text-center"><tr>
-<?php 
-//columnCount() : méthode PDOStatement qui retourne le nombre de colonne selectionné dans la requete SELECT
-        for ($i = 0; $i < $data->columnCount(); $i++):
-            //getColumnMeta() : permet de recolter les informations liés aux champs/colonne de la table (primary key, not null, nom du champs..)
-        $colonne = $data->getColumnMeta($i) 
-        ?>
-        <th><?= $colonne['name'] // on va crocheter à l'indice 'name' afin d'afficher chaque nom de colonne dans les entetes du tableau?></th>
-        <?php endfor; ?>
-        <th>Supprimer</th>
-    </tr>
-    <!--On associe la méthode fetch à l'objet PDOStatement, ce qui retourne un ARRAY d'un produit par tour de boucle WHILE-->
-    <?php while($products = $data->fetch(PDO::FETCH_ASSOC)): ?>
-        <tr>
-        <!--La boucle foreach passe en revue chaque tableau ARRAY de chaque produits-->
-        <?php foreach($products as $key => $value): ?>
-
-            <!--Si l'indice du tableau est 'photo' on envoi l'URL de l'image dans l'attribut 'src' de la balise 'img' afin d'afficher l'image et pas l'URL de l'image-->
-        <?php if($key == 'photo'): ?>
-        <td><img src="<?= $value ?>" alt="" style="width : 100px;"></td>
-        <?php else: //sinon on affiche chaque donnée normalement dans des cellules <td>?> 
-            <td><?= $value ?></td>
-        <?php endif; ?>
-        <?php endforeach; ?>
-        <!--On créer un lien 'suppression' pour chaque produits en envoyant l'id_avis dans l'URL-->
-                <td><a href="?action=suppression&id_salle=<?=$products['id_salle']?>" class="btn btn-danger"> Supprimer</a></td>
-
-    </tr>
-        <?php endwhile; ?>
-
-</table>
+<div class="container col-12 overflow-auto">
+    <table id="opentable" class="table table-striped table-bordered text-center" style="width:100%">
+        <thead>
+            <tr>
+                <?php 
+                //columnCount() : méthode PDOStatement qui retourne le nombre de colonne selectionné dans la requete SELECT
+                    for ($i = 0; $i < $data->columnCount(); $i++):
+                        //getColumnMeta() : permet de recolter les informations liés aux champs/colonne de la table (primary key, not null, nom du champs..)
+                    $colonne = $data->getColumnMeta($i) 
+                ?>
+                <th><?= $colonne['name'] // on va crocheter à l'indice 'name' afin d'afficher chaque nom de colonne dans les entetes du tableau?></th>
+                <?php endfor; ?>
+                <th>Supprimer</th>
+            </tr>
+        </thead>
+        <tbody>
+            <!--On associe la méthode fetch à l'objet PDOStatement, ce qui retourne un ARRAY d'un produit par tour de boucle WHILE-->
+            <?php while($products = $data->fetch(PDO::FETCH_ASSOC)): ?>
+                <tr>
+                    <!--La boucle foreach passe en revue chaque tableau ARRAY de chaque avis-->
+                    <?php foreach($products as $key => $value): ?>
+                        <td><?= $value ?></td>
+                    <?php endforeach; ?>
+                    <!--On créer un lien 'suppression' pour chaque avis en envoyant l'id_avis dans l'URL-->
+                        <td><a href="?action=suppression&id_salle=<?=$products['id_salle']?>" class="btn btn-danger"> Supprimer</a></td>
+                </tr>
+            <?php endwhile; ?>
+        </tbody>
+    </table>
+</div>
 <!------------------FIN AFFICHAGE AVIS------------------->
 <!--Balise de fermeture de la condition d'affichage 001-->
 <?php endif; ?>
