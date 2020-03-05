@@ -37,7 +37,7 @@ require_once('inc/header.inc.php');
 
   <div class="col-lg-3">
 
-    <!-- Faites en sorte d'afficher les catégories de produits stockés en bdd et envoyer la catégorie dans l'URL (category=tee-shirt)  -->
+    <!-- Faites en sorte d'afficher les catégories de salle stockés en bdd et envoyer la catégorie dans l'URL-->
 
         <!--Requete de selection de salle-->
         <h4 class="my-4 text-center">Nos salles</h4>

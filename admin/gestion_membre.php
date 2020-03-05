@@ -10,14 +10,16 @@ if(!connecteAdmin())
 //----------------------SUPPRESSION MEMBRE 
 if (isset($_GET['action']) && $_GET['action'] == 'suppression')
 {
-
-
-
+//DELETE FROM membre WHERE id_membre = :id_membre
     //requete de suppression préparé
     $supp = $bdd->prepare("DELETE FROM membre WHERE id_membre = :id_membre");
     $supp->bindValue(':id_membre',$_GET['id_membre'], PDO::PARAM_INT);
     // on envoie l'id_membre récupéré dans l'URL dans le marqueur :id_membre
     $supp->execute();
+    
+    $supp2 = $bdd->prepare("DELETE FROM avis WHERE id_membre = :id_membre");
+    $supp2->bindValue(':id_membre',$_GET['id_membre'], PDO::PARAM_INT);
+    $supp2->execute();
 
     $_GET['action'] = 'affichage' ; 
 
