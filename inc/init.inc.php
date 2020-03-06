@@ -11,7 +11,7 @@ define("RACINE_SITE", $_SERVER['DOCUMENT_ROOT'] . '/swift/');
 // echo RACINE_SITE . '<hr>';
 
 define("URL", "http://localhost/swift/");
-// cette constante servira par exemple à enregistrer l'URL d'une image dans la BDD, on ne conserve pas l'image dans le BDD, ce serait trop lour pour le serveur 
+// cette constante servira par exemple à enregistrer l'URL d'une image dans la BDD, on ne conserve pas l'image dans la BDD, ce serait trop lourd pour le serveur 
 
 //------- FAILLES XSS 
 foreach($_POST as $key => $value)
