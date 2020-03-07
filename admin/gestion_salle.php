@@ -233,7 +233,7 @@ si il y a action et ajout dans L'URL on lance le formulaire OU si dans l'url il 
 
 ?>
 
-<!---Formulaire table salle --->
+<!---Formulaire  salle --->
 
 <h3 class="display-4 text-center mt-2"><?= ucfirst($_GET['action']) ?> Salles</h3>
 <form class="container" action="#" method="POST" enctype="multipart/form-data" style="margin-top:35px; margin-bottom:35px;">
