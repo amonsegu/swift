@@ -182,29 +182,32 @@ si il y a action et ajout dans L'URL on lance le formulaire OU si dans l'url il 
         </div>
 
 <!-- DATE ARRIVEE-->
+<?php $objDateTime = new DateTime('NOW'); ?>
 <div class="form-group">        
         <label style="margin-top:20px" for="date_arrivee" >Date d'arrivée</label>
         <input type="datetime-local" class="form-control" id="date_arrivee"  name="date_arrivee">
+        <small><p><b>Format : </b> jj/mm/aaaa hh:mm</p></small>
         </div>    
       
 <!-- DATE DEPART -->
 <div class="form-group">        
         <label style="margin-top:20px" for="date_depart" >Date de départ</label>
-        <input type="datetime-local" class="form-control" id="date_depart"  name="date_depart">
+        <input type="datetime-local" class="form-control" id="date_depart"  name="date_depart" ">
+        <small><p><b>Format : </b> jj/mm/aaaa hh:mm</p></small>
         </div>   
 
 <!-- CP DE LA SALLE-->
 <div class="form-group">        
         <label style="margin-top:20px" for="prix" >Tarif</label>
-        <input type="number" class="form-control" id="prix" placeholder="tarif" name="prix"  value="<?php if(isset($prix)) echo ("$prix") ?> ">
+        <input type="number" class="form-control" id="prix" placeholder="tarif" name="prix">
         </div>   
 
 <!-- ETAT-->
 <div class="form-group">        
         <label for="etat" style="margin-top:20px">Etat</label>
         <select id="etat" name="etat" class="form-control">
-            <option value="libre" <?php if(isset($etat) && $etat == "libre") echo 'selected'?>>libre</option>
-            <option value="reservation"  <?php if(isset($etat) && $etat == "reservation") echo 'selected'?>> reservation</option>
+            <option value="libre">libre</option>
+            <option value="reservation"> reservation</option>
         </select>
         </div>
 
