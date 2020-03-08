@@ -61,8 +61,11 @@ require_once('inc/header.inc.php');
 
       <!-- /.col-lg-3 -->
 
-  
+  <div>
+     <a href="javascript:history.back()"class="btn btn-dark" style="margin-top:5px">Retour boutique</a>
+  </div>
   <div class="container row justify-content-between" style="margin-top:20px">
+  
   <div>
     <h3 >
       <p><b>Salle : </b><?php echo $titreMaj; ?></p>
@@ -83,7 +86,7 @@ require_once('inc/header.inc.php');
       <?php 
       $photolien=$prod["photo"];
       ?>
-      <img class="img-fluid" src="<?= $photolien ?>" alt="">
+      <img class="img-fluid border rounded" src="<?= $photolien ?>" alt="">
       </div>
   
   <div class="col-lg-4 p-0">
@@ -133,12 +136,45 @@ $heureDepartFormat = $prod['date_depart'];
 //on selectionne ce qui se trouve aprés le 1espace dans la chaine datetime Y-m-d Hms récupéree donc les heure/min/sec d'arrivée
 $heureDepart = stristr($heureDepartFormat, ' '); 
 ?>
+<div class="container col-12 mt-2">
+   <div class="row">   
+      <div class="col-5">
         <p class="card-text text-left"><i class="fas fa-calendar-alt"></i><b> Date d'arrivée : </b><?php echo "$dateArrivee" . '<b> à partir de :</b>' . "$heureArrivee" ?></p>
         <p class="card-text text-left"><i class="fas fa-calendar-alt"></i><b> Date de départ : </b><?php echo "$dateDepart" . '<b> à partir de :</b>' . "$heureDepart" ?></p>
+      </div>
+      <div class="col">
         <p class="card-text text-left"><i class="fas fa-users"></i><b> Capacité : </b><?= $prod['capacite'] ?></p>
         <p class="card-text text-left"><i class="fas fa-inbox"></i><b> Categorie de la salle : </b><?= ucfirst($prod["categorie"]) ?></p>
+    </div>
+    <div class="col>  
         <p class="card-text text-left"><i class="fas fa-map-marker-alt"></i><b> Adresse : </b><?= $prod['adresse'] . ' ' . $prod['cp'] . ' ' . $prod['ville'] ?></p>
-        <p class="card-text text-left"><i class="fas fa-euro-sign"></i><b> Tarif : </b><?= $prod['prix'] ?> €</p><hr>
+        <p class="card-text text-left"><i class="fas fa-euro-sign"></i><b> Tarif : </b><?= $prod['prix'] ?> €</p>
+    </div>
+    </div>
+</div>
+<hr>
+
+
+<?php
+$cpsalle = $prod['cp'];
+$numeroSalle=$prod['id_salle'];
+$dataPhoto = $bdd->prepare("SELECT salle.id_salle, salle.titre, salle.photo, salle.cp, produit.id_produit
+FROM salle
+LEFT JOIN produit 
+ON produit.id_salle = salle.id_salle
+WHERE salle.cp = $cpsalle
+AND salle.id_salle != $numeroSalle
+AND produit.id_produit IS NOT NULL");
+$dataPhoto->execute();
+$dp = $dataPhoto->fetchALL(PDO::FETCH_ASSOC);
+echo "<pre>"; var_dump($dp); echo"</pre>";
+
+
+
+?>
+
+
+
 
 
 
@@ -148,22 +184,22 @@ $heureDepart = stristr($heureDepartFormat, ' ');
     <!--Bloc commentaire-->
     <?php
     $numeroSalle=$prod['id_salle'];
-    $dat2 = $bdd->query("SELECT avis.id_avis, avis.id_membre, avis.id_salle, avis.commentaire, avis.note, avis.date_enregistrement, salle.id_salle, membre.id_membre, membre.pseudo
+    $dat2 = $bdd->prepare("SELECT avis.id_avis, avis.id_membre, avis.id_salle, avis.commentaire, avis.note, avis.date_enregistrement, salle.id_salle, salle.titre, membre.id_membre, membre.pseudo
     FROM avis
     LEFT JOIN salle 
     ON avis.id_salle = salle.id_salle
     LEFT JOIN membre
     ON avis.id_membre = membre.id_membre
     WHERE avis.id_salle = $numeroSalle");
- 
+    $dat2->execute();
 
 
     $data3 = $bdd->prepare("SELECT AVG(note) FROM avis WHERE id_salle = $numeroSalle");
     $data3->execute();
     
-
+    
     $noteRecup = $data3->fetch(PDO::FETCH_NUM);
-    //echo "<pre>"; var_dump($noteRecup); echo"</pre>";
+    //echo "<pre>"; var_dump($_SESSION); echo"</pre>";
     //$noteRecup = (int)$noteRecup;
     $noteRecup = round($noteRecup[0], 0, PHP_ROUND_HALF_UP);
     $noteRecup = (int)$noteRecup;
@@ -188,43 +224,133 @@ $heureDepart = stristr($heureDepartFormat, ' ');
   <div style="background-color: #F5F5F5; height:50px">
     <h5 class="p-1"><b>Les avis sur la Salle :</b> <?= $titreMaj . ' ' .$noteaffichage ?></h5> 
 
-    <?php while($prod = $dat2->fetch(PDO::FETCH_ASSOC)): ?>       
+    <?php while($prod = $dat2->fetch(PDO::FETCH_ASSOC)): 
+      $prod['note'] = round($prod['note'], 0, PHP_ROUND_HALF_UP);
+      $prod['note'] = (int)$prod['note'];
+      if($prod['note']==1){
+        $noteUser = '<span style="color:gold; font-size: 20px;">★</span>';
+      }elseif($prod['note']==2){
+        $noteUser = '<span style="color:gold; font-size: 20px;">★★</span>';
+      }
+      elseif($prod['note']==3){
+        $noteUser = '<span style="color:gold; font-size: 20px;">★★★</span>';
+      }
+      elseif($prod['note']==4){
+        $noteUser = '<span style="color:gold; font-size: 20px;">★★★★</span>';
+      }
+      elseif($prod['note']==5){
+        $noteUser = '<span style="color:gold; font-size: 20px;">★★★★★</span>';
+      }
+        ?>
+      
   </div>
   <div class="p-1">
   <p><?= $prod['commentaire'] ?></p>
   <small class="text-muted">
   <p>
     <b>Posté par :</b>
-    <?= ucfirst($prod['pseudo']) ?> Le <?= $prod['date_enregistrement'] ?>
+    <?= ucfirst($prod['pseudo']) . ' Le ' .  $prod['date_enregistrement'] . ' ' . $noteUser ?>
   </small>
     <?php endwhile; ?>
   </div>
 </div>
 <!--Fin commentaire-->
+
         
         <!-- /.card -->
-        <?php if(connect()): // accés membre connecté ?>
+        <?php if(connect()): // accés membre connecté 
+        extract($_POST);
+
+        
+        if($_POST)
+        {
+
+
+
+              $commentaire = $_POST["commentaire"];
+              $commentaire = trim($commentaire);
+              $commentaire = stripslashes($commentaire);
+              $commentaire = htmlspecialchars($commentaire);
+
+              echo $commentaire;
+              
+
+              $infosFormulaire = $bdd->query("SELECT avis.id_avis, avis.id_membre, avis.id_salle, avis.commentaire, avis.note, avis.date_enregistrement, salle.id_salle, salle.titre, membre.id_membre, membre.pseudo
+              FROM avis
+              LEFT JOIN salle 
+              ON avis.id_salle = salle.id_salle
+              LEFT JOIN membre
+              ON avis.id_membre = membre.id_membre
+              WHERE avis.id_salle = $numeroSalle");
+              $recupFormulaire = $infosFormulaire->fetch(PDO::FETCH_ASSOC);
+  
+                $insert = $bdd->prepare("INSERT INTO avis (id_membre, id_salle, commentaire, note, date_enregistrement) VALUES (:id_membre, :id_salle, :commentaire, :note, now() )");
+        
+                $insert->bindValue(':id_membre', $_SESSION['membre']['id_membre'], PDO::PARAM_INT);
+                $insert->bindValue(':id_salle', $recupFormulaire['id_salle'], PDO::PARAM_INT);
+                $insert->bindValue(':commentaire', $commentaire, PDO::PARAM_STR);
+                $insert->bindValue(':note', $noteUser, PDO::PARAM_INT);
+        
+                $insert->execute();
+
+
+        }
+
+          $infosFormulaire = $bdd->query("SELECT avis.id_avis, avis.id_membre, avis.id_salle, avis.commentaire, avis.note, avis.date_enregistrement, salle.id_salle, salle.titre, membre.id_membre, membre.pseudo
+          FROM avis
+          LEFT JOIN salle 
+          ON avis.id_salle = salle.id_salle
+          LEFT JOIN membre
+          ON avis.id_membre = membre.id_membre
+          WHERE avis.id_salle = $numeroSalle");
+          $recupFormulaire = $infosFormulaire->fetch(PDO::FETCH_ASSOC);
+         // echo "<pre>"; var_dump($recupFormulaire); echo"</pre>";
+         // echo "<pre>"; var_dump($_SESSION); echo"</pre>";
+
+          
+          ?>
+        <h6 class="display-4 text-center mt-2">Laisser un avis</h6><hr>
         <div class="container row justify-content-between">
-            <div>
-              <h5>Formulaire envoi avis</h5>
-            </div>
-            
-            <div>
-            <a href="index.php"class="btn btn-dark" style="margin-top:5px">Retour boutique</a>
-            </div>
-          </div>
-            
+        <form method="post">
+          <div class="form-row">
+              <div class="form-group col-md-12">
+              <label for="pseudo">Pseudo</label>
+              <input type="text" class="form-control" id="pseudo" name="pseudo" value="<?= $_SESSION['membre']['pseudo'] ?>" disabled required>
+              </div>
+
+              <div class="form-row col-md-12">
+                <div class="form-group col-md-6">
+                  <label for="pseudo">Salle</label>
+                  <input type="text" class="form-control" id="pseudo" name="pseudo" value="<?= $recupFormulaire['titre'] ?>" disabled required>
+                </div>
+
+                <div class="form-group col-md-6">
+                  <label for="noteUser">Note :</label>
+                  <select id="noteUser" name="noteUser" class="form-control" required>
+                    <option value=1>★</option>
+                    <option value=2>★★</option>
+                    <option value=3>★★★</option>
+                    <option value=4>★★★★</option>
+                    <option value=5>★★★★★</option>
+                  </select>
+               </div>
+                </div>      
+
+               <div class="form-row col-md-12">
+               <label for="commentaire">Avis :</label>
+                <textarea type="textarea" class="form-control" id="commentaire" name="commentaire" placeholder="Entrer ici votre avis" rows=3 maxlength="555" required></textarea>    
+               <small><p>555 caractères maximum<p><small>
+              </div>
+
+              <button type="submit" class="btn btn-dark mt-2 mb-3" >Poster</button>
+
+            </form>
+
 
             <?php else: // visiteur non connécté ?>
 
             <div class="container row justify-content-between mt-1 mb-3">
-            <div>
-              <a href="connexion.php"><h6 class="rounded p-1" style="background-color: lightgray">Veuillez vous connecter afin de laisser un avis</h6></a>
-            </div>
-            
-            <div>
-            <a href="<?php echo $_SERVER['HTTP_REFERER']; ?>"class="btn btn-dark" style="margin-top:5px">Retour</a>
-            </div>
+              <a href="connexion.php"><h6 class="rounded p-1" style="background-color: lightgray">Veuillez vous connecter afin de laisser un avis</h6></a>  
           </div>
 
           <?php endif; ?>
