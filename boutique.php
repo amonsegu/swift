@@ -24,12 +24,38 @@ require_once('inc/header.inc.php');
         
 
  <!-- VILLE DE LA SALLE-->
- <select name="ville" onchange="showUser(this.value)">
+ <select name="ville" onchange="showProductVille(this.value)">
   <option value="">Sélectionner une ville:</option>
   <option value="paris">Paris</option>
   <option value="lyon">Lyon</option>
   <option value="marseille">Marseille</option>
-  </select> 
+  </select>
+  
+   <!-- CP DE LA SALLE-->
+ <select name="cp" onchange="showProductCp(this.value)">
+  <option value="">Sélectionner un Code Postal:</option>
+  <option value="75001">75001</option>
+  <option value="75015">75015</option>
+  </select>
+   
+  
+  <!-- CATEGORIE DE LA SALLE-->
+ <select name="cat" onchange="showProductCat(this.value)">
+  <option value="">Sélectionner une Catégorie:</option>
+  <option value="réunion">Réunion</option>
+  <option value="bureau">Bureau</option>
+  <option value="formation">Formation</option>
+  </select>
+  
+  <!-- CAPACITE DE LA SALLE-->
+ <select name="cap" onchange="showProductCap(this.value)">
+  <option value="">Sélectionner une Capacité:</option>
+  <option value="5">5</option>
+  <option value="10">10</option>
+  <option value="15">15</option>
+  </select>
+  
+
 
 
 
@@ -96,7 +122,8 @@ require_once('inc/header.inc.php');
         </div>
 
     <?php endforeach;  ?>
-</div>
+    </div>
+<!--Fin selection AJAX-->
     </div>
     <!-- /.row -->
 
