@@ -373,7 +373,7 @@ $dp = $dataPhoto->fetchALL(PDO::FETCH_ASSOC);
             <?php else: // visiteur non connécté ?>
 
             <div class="container row justify-content-between mt-1 mb-3">
-              <a href="connexion.php"><h6 class="rounded p-1" style="background-color: lightgray">Veuillez vous connecter afin de laisser un avis</h6></a>  
+              <span class="rounded p-1" style="background-color: lightgray">Veuillez vous <a href="connexion.php">connecter</a> ou vous <a href="connexion.php">inscrire</a> afin de laisser un avis</span>  
           </div>
 
           <?php endif; ?>
