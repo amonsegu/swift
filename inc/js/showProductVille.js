@@ -20,6 +20,6 @@ function showProductVille(str)
       document.getElementById("txtHint").innerHTML=xmlhttp.responseText;
       }
     }
-  xmlhttp.open("GET","getproductbycat.php?ville="+str,true);
+  xmlhttp.open("GET","getproductbyville.php?ville="+str,true);
   xmlhttp.send();
   }

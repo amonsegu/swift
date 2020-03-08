@@ -124,7 +124,7 @@ $heure = $prod['date_arrivee'];
 $heureArrivee = stristr($heure, ' '); 
 
 
-//On selectionne la date d'arrivée 
+//On selectionne la date de depart 
 $dateDepartFormat = $prod['date_depart'] ;
 //on selectionne avant le 1er espace de la chaine de caractere  Y-m-d Hms récupérée
 $dateCropHeure = stristr($dateDepartFormat, ' ', true); 
