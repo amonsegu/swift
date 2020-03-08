@@ -164,31 +164,34 @@ LEFT JOIN produit
 ON produit.id_salle = salle.id_salle
 WHERE salle.cp = $cpsalle
 AND salle.id_salle != $numeroSalle
-AND produit.id_produit IS NOT NULL");
+AND produit.id_produit IS NOT NULL
+LIMIT 2");
 $dataPhoto->execute();
 $dp = $dataPhoto->fetchALL(PDO::FETCH_ASSOC);
 
 //echo "<pre>"; var_dump($dp); echo"</pre>";
 //echo $dp[0]['photo'];
 ?>
-<h3>Salles disponibles dans le même quartier : </h3>
+<h3 style="margin-bottom:30px">Salles disponibles dans le même quartier : </h3>
+<div class="container row">
 <?php foreach($dp as $key => $value): ?>
 
 <div class="col-lg-4 col-md-6 mb-4">
     <div class="card h-100">
     <a href="fiche_produit.php?id_produit=<?= $value['id_produit'] ?>">
-      <img class="card-img-top" src="<?= $value['photo'] ?>" alt="">
+      <img class="img" height="250px" width="100%" src="<?= $value['photo'] ?>" alt="">
     </a>
-    <div class="card-footer">
-    <h4>
+    <div class="card-body">
+    <div class="card-title">
         <a href="fiche_produit.php?id_produit=<?= $value['id_produit'] ?>"><?= $value['titre'] ?></a>
-    </h4>
-        <a href="fiche_produit.php?id_produit=<?= $value['id_produit'] ?>" class="btn btn-dark">Détails</a>
+    </div>
+    <a href="fiche_produit.php?id_produit=<?= $value['id_produit'] ?>" class="btn btn-dark">Détails</a>
     </div>
     </div>
 </div>
 
 <?php endforeach; ?>
+</div>
 
 
 </div>
