@@ -1,33 +1,13 @@
 <?php 
 require_once('inc/init.inc.php');
 
-//On vérifie si une catégorie est bien définit dans l'URL
-if(isset($_GET['etat']))
-{
-            $data = $bdd->prepare("SELECT * FROM produit WHERE etat = :etat");
-            $data->bindValue(':etat', $_GET['etat'], PDO::PARAM_STR);
-            $data->execute();
-
-
-            //Si la condition IF renvoie TRUE, cela veut dire que le requete a bien retourné des produits liés a la catégorie
-            if($data->rowCount())     //rowncount permet de compter le nombre de lignes par selection
-                {
-                    $produits = $data->fetchALL(PDO::FETCH_ASSOC);
-                    //echo'<pre>'; print_r($produits); echo '</pre>';
-                }
-                else{   // sinon la catégorie dans l'URL n'existe pas en BDD on renvoie vers la page boutique
-                    header('Location: ' . URL . 'boutique.php');
-                }
-        
-}else // si il n'y a pas de catégories dans l'URL, nous selectionons l'ensemble des produits
-{
     $data = $bdd->query("SELECT salle.id_salle, salle.titre, salle.description, salle.photo, salle.pays, salle.ville, salle.adresse, salle.cp, salle.capacite, salle.categorie, produit.id_produit,  produit.date_arrivee, produit.date_depart, produit.prix, produit.etat 
     FROM produit
     LEFT JOIN salle 
     ON produit.id_salle = salle.id_salle
     ORDER BY produit.id_produit;");
     $produits = $data->fetchALL(PDO::FETCH_ASSOC);
-}
+
 require_once('inc/header.inc.php');
 ?>
 <!--container-->
@@ -40,17 +20,21 @@ require_once('inc/header.inc.php');
     <!-- Faites en sorte d'afficher les catégories de salle stockés en bdd et envoyer la catégorie dans l'URL-->
 
         <!--Requete de selection de salle-->
-        <h4 class="my-4 text-center">Nos salles</h4>
-        <div class="list-group">
-            <?php 
-            $data = $bdd->query("SELECT DISTINCT etat FROM produit");
-            while($cat = $data->fetch(PDO::FETCH_ASSOC)):
-                //echo '<pre>'; print_r($cat); echo '</pre>';
-            ?>
-                <a href="?etat=<?= $cat['etat'] ?>" class="list-group-item alert-link text-dark text-center"><?= $cat['etat'] ?></a>
+        <h4 class="my-4 text-center">Selectionner</h4>
+        
 
-            <?php endwhile; ?>  
-        </div>
+ <!-- VILLE DE LA SALLE-->
+ <select name="ville" onchange="showUser(this.value)">
+  <option value="">Sélectionner une ville:</option>
+  <option value="paris">Paris</option>
+  <option value="lyon">Lyon</option>
+  <option value="marseille">Marseille</option>
+  </select> 
+
+
+
+
+
         </div>
   <!-- /.col-lg-3 -->
 
@@ -85,6 +69,12 @@ require_once('inc/header.inc.php');
 
     <div class="row">
 
+
+
+    <!-- Affichage produit SELECTION AJAX-->
+    <div class="container row" id="txtHint" >
+
+    <!-- Affichage produit SELECTION CLASSIQUE-->
     <?php foreach($produits as $key => $value): ?>
 
         <div class="col-lg-4 col-md-6 mb-4">
@@ -105,7 +95,8 @@ require_once('inc/header.inc.php');
             </div>
         </div>
 
-    <?php endforeach; ?>
+    <?php endforeach;  ?>
+</div>
     </div>
     <!-- /.row -->
 

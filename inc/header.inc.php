@@ -10,6 +10,33 @@
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/fancyapps/fancybox@3.5.7/dist/jquery.fancybox.min.css" />
     <link href="https://use.fontawesome.com/releases/v5.0.7/css/all.css" rel="stylesheet" >
     <title>Swift location bureau & salle</title>
+    <script type="text/javascript">
+  function showUser(str)
+  {
+  if (str=="")
+    {
+    document.getElementById("txtHint").innerHTML="";
+    return;
+    }
+  if (window.XMLHttpRequest)
+    {// code for IE7+, Firefox, Chrome, Opera, Safari
+    xmlhttp=new XMLHttpRequest();
+    }
+  else
+    {// code for IE6, IE5
+    xmlhttp=new ActiveXObject("Microsoft.XMLHTTP");
+    }
+  xmlhttp.onreadystatechange=function()
+    {
+    if (xmlhttp.readyState==4 && xmlhttp.status==200)
+      {
+      document.getElementById("txtHint").innerHTML=xmlhttp.responseText;
+      }
+    }
+  xmlhttp.open("GET","getuser.php?ville="+str,true);
+  xmlhttp.send();
+  }
+  </script>
 </head>
 <body style="height:100%">
     <nav class="navbar navbar-expand-md navbar-dark bg-dark">
