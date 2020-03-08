@@ -167,22 +167,35 @@ AND salle.id_salle != $numeroSalle
 AND produit.id_produit IS NOT NULL");
 $dataPhoto->execute();
 $dp = $dataPhoto->fetchALL(PDO::FETCH_ASSOC);
-echo "<pre>"; var_dump($dp); echo"</pre>";
 
-
-
+//echo "<pre>"; var_dump($dp); echo"</pre>";
+//echo $dp[0]['photo'];
 ?>
+<h3>Salles disponibles dans le même quartier : </h3>
+<?php foreach($dp as $key => $value): ?>
 
+<div class="col-lg-4 col-md-6 mb-4">
+    <div class="card h-100">
+    <a href="fiche_produit.php?id_produit=<?= $value['id_produit'] ?>">
+      <img class="card-img-top" src="<?= $value['photo'] ?>" alt="">
+    </a>
+    <div class="card-footer">
+    <h4>
+        <a href="fiche_produit.php?id_produit=<?= $value['id_produit'] ?>"><?= $value['titre'] ?></a>
+    </h4>
+        <a href="fiche_produit.php?id_produit=<?= $value['id_produit'] ?>" class="btn btn-dark">Détails</a>
+    </div>
+    </div>
+</div>
 
-
-
-
+<?php endforeach; ?>
 
 
 </div>
         
     <!--Bloc commentaire-->
     <?php
+    $noteaffichage="";
     $numeroSalle=$prod['id_salle'];
     $dat2 = $bdd->prepare("SELECT avis.id_avis, avis.id_membre, avis.id_salle, avis.commentaire, avis.note, avis.date_enregistrement, salle.id_salle, salle.titre, membre.id_membre, membre.pseudo
     FROM avis
@@ -201,6 +214,7 @@ echo "<pre>"; var_dump($dp); echo"</pre>";
     $noteRecup = $data3->fetch(PDO::FETCH_NUM);
     //echo "<pre>"; var_dump($_SESSION); echo"</pre>";
     //$noteRecup = (int)$noteRecup;
+
     $noteRecup = round($noteRecup[0], 0, PHP_ROUND_HALF_UP);
     $noteRecup = (int)$noteRecup;
    // echo "<pre>"; var_dump($noteRecup); echo"</pre>";
@@ -218,11 +232,17 @@ echo "<pre>"; var_dump($dp); echo"</pre>";
   elseif($noteRecup==5){
     $noteaffichage = '<span style="color:gold; font-size: 30px;">★★★★★</span>';
   }
+
     ?>
 
 <div class="container border  rounded col-12 p-0">
-  <div style="background-color: #F5F5F5; height:50px">
-    <h5 class="p-1"><b>Les avis sur la Salle :</b> <?= $titreMaj . ' ' .$noteaffichage ?></h5> 
+  <div style="background-color: #F5F5F5;">
+    <p>
+      <b>Les avis sur la Salle : </b><span style="font-size:20px"><?= $titreMaj;?></span> 
+      <?php if ($noteaffichage){
+        echo $noteaffichage;
+        }else{echo '  <small>(La salle n\'a pas encore d\'avis)</small>';} ?>
+    </p>
 
     <?php while($prod = $dat2->fetch(PDO::FETCH_ASSOC)): 
       $prod['note'] = round($prod['note'], 0, PHP_ROUND_HALF_UP);
