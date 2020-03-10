@@ -10,7 +10,7 @@ define("RACINE_SITE", $_SERVER['DOCUMENT_ROOT'] . '/swift/');
 // cette constante retourne le chemin physique du dossier boutique sur le serveur, lors de l'ulpoad d'images, nous aurons besoin du chemin complet vers le dossier photo pour enregistrer la photo
 // echo RACINE_SITE . '<hr>';
 
-define("URL", "http://localhost/swift/");
+define("URL",  "http://localhost/swift/");
 // cette constante servira par exemple à enregistrer l'URL d'une image dans la BDD, on ne conserve pas l'image dans la BDD, ce serait trop lourd pour le serveur 
 
 //------- FAILLES XSS 
