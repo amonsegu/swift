@@ -86,7 +86,7 @@
                 $nbProduct = 0;
             ?>
     
-            <li class="nav-item">
+            <li class="nav-item active">
                 <a class="nav-link" href="<?= URL ?>index.php">Boutique</a>
             </li>            
             
