@@ -20,45 +20,77 @@ require_once('inc/header.inc.php');
 
  <div class="container">
    
+ <?php $datasalle = $bdd ->query("SELECT DISTINCT ville FROM salle ");?>
+
+
+
+
   <div class="form-group">
 
      <!-- VILLE DE LA SALLE-->
     <label style="margin-top:20px" for="ville" ><b>Ville:</b></label><br>
     <select name="ville" classe="form-control" onchange="showProductVille(this.value)">
-      <option value="paris">selectionner</option>
-      <option value="paris">Paris</option>
-      <option value="lyon">Lyon</option>
-      <option value="marseille">Marseille</option>
+    <?php
+                while($cat = $datasalle->fetch(PDO::FETCH_ASSOC)):
+            ?>
+                <option value='<?php echo (string)$cat['ville'] ?>'>
+                <?php
+                echo $cat['ville'] ;
+                ?>
+                </option>
+            <?php endwhile; ?>  
     </select><br>
 
   
    <!-- CP DE LA SALLE-->
-
+   <?php $cpsalle = $bdd ->query("SELECT DISTINCT cp FROM salle ");?>
     <label style="margin-top:20px" for="cp" ><b>Code postal:</b></label><br>
     <select name="cp" classe="form-control" onchange="showProductCp(this.value)">
-      <option value="75001">Selectionner</option>
-      <option value="75001">75001</option>
-      <option value="75015">75015</option>
+    <?php
+                while($cat = $cpsalle->fetch(PDO::FETCH_ASSOC)):
+            ?>
+                <option value='<?php echo (int)$cat['cp'] ?>'>
+                <?php
+                echo $cat['cp'] ;
+                ?>
+                </option>
+            <?php endwhile; ?>
       </select><br>
      
    
   
   <!-- CATEGORIE DE LA SALLE-->
+  <?php $catsalle = $bdd ->query("SELECT DISTINCT categorie FROM salle ");?>
   <label style="margin-top:20px" for="cat" ><b>Catégorie:</b></label><br>
  <select name="cat" classe="form-control" onchange="showProductCat(this.value)">
-  <option value="réunion">Selectionner</option>
-  <option value="réunion">Réunion</option>
-  <option value="bureau">Bureau</option>
-  <option value="formation">Formation</option>
+            <?php
+                while($cat = $catsalle->fetch(PDO::FETCH_ASSOC)):
+            ?>
+                <option value='<?php echo (string)$cat['categorie'] ?>'>
+                <?php
+                echo $cat['categorie'] ;
+                ?>
+                </option>
+            <?php endwhile; ?>
   </select><br>
+
+
+
+
   
   <!-- CAPACITE DE LA SALLE-->
+  <?php $capsalle = $bdd ->query("SELECT DISTINCT capacite FROM salle ");?>
   <label style="margin-top:20px" for="cap" ><b>Capacité:</b></label><br>
  <select name="cap" classe="form-control" onchange="showProductCap(this.value)">
-  <option value="15">Selectionner</option>
-  <option value="5">5</option>
-  <option value="10">10</option>
-  <option value="15">15</option>
+ <?php
+                while($cat = $capsalle->fetch(PDO::FETCH_ASSOC)):
+            ?>
+                <option value='<?php echo (int)$cat['capacite'] ?>'>
+                <?php
+                echo $cat['capacite'] ;
+                ?>
+                </option>
+            <?php endwhile; ?>
   </select>
 
  </div>
