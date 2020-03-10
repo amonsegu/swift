@@ -14,6 +14,7 @@
     <script type="text/javascript" src="inc/js/showproductcp"></script>
     <script type="text/javascript" src="inc/js/showproductcat"></script>
     <script type="text/javascript" src="inc/js/showproductcap"></script>
+    <script type="text/javascript" src="inc/js/test"></script>
 </head>
 
 
