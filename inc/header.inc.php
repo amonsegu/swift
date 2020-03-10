@@ -102,7 +102,7 @@
                 <a class="nav-link" href="<?= URL ?>inscription.php">Inscription</a>
             </li>
             <li class="nav-item">
-                <a class="nav-link" href="<?= URL ?>connexion.php">Connexion</a>
+                <a class="nav-link" href="<?= URL ?>connexion.php">Connexion&nbsp; <i class="fas fa-user" style="color:#fffff;"></i></a>
             </li>
         </ul>
         <?php endif; ?>
