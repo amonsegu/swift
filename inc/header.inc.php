@@ -63,7 +63,7 @@
                 <a class="nav-link" href="<?= URL ?>connexion.php">Connexion</a>
             </li>
             <li class="nav-item">
-                <a class="nav-link" href="<?= URL ?>boutique.php">Boutique</a>
+                <a class="nav-link" href="<?= URL ?>index.php">Boutique</a>
             </li>
             <li class="nav-item">
                 <a class="nav-link" href="<?= URL ?>panier.php">Panier <span class="badge badge-info"><?= $nbProduct ?></span></a>
