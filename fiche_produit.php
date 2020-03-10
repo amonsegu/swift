@@ -62,7 +62,7 @@ require_once('inc/header.inc.php');
       <!-- /.col-lg-3 -->
 
   <div>
-     <a href="javascript:history.back()"class="btn btn-dark" style="margin-top:5px">Retour boutique</a>
+     <a href="<?= URL ?>index.php" class="btn btn-dark" style="margin-top:5px">Retour boutique</a>
   </div>
   <div class="container row justify-content-between" style="margin-top:20px">
   
