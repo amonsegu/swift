@@ -24,7 +24,7 @@ require_once('inc/header.inc.php');
 
      <!-- VILLE DE LA SALLE-->
     <label style="margin-top:20px" for="ville" ><b>Ville:</b></label><br>
-    <select name="ville" classe="form-control w-50" onchange="showProductVille(this.value)">
+    <select name="ville" classe="form-control" onchange="showProductVille(this.value)">
       <option value="paris">selectionner</option>
       <option value="paris">Paris</option>
       <option value="lyon">Lyon</option>
