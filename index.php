@@ -1,6 +1,7 @@
 <?php 
 require_once('inc/init.inc.php');
-
+require_once('inc/fonction.inc.php');
+require_once('inc/header.inc.php');
     $data = $bdd->query("SELECT salle.id_salle, salle.titre, salle.description, salle.photo, salle.pays, salle.ville, salle.adresse, salle.cp, salle.capacite, salle.categorie, produit.id_produit,  produit.date_arrivee, produit.date_depart, produit.prix, produit.etat
     FROM produit
     LEFT JOIN salle 
@@ -8,10 +9,11 @@ require_once('inc/init.inc.php');
     ORDER BY produit.id_produit;");
     $produits = $data->fetchALL(PDO::FETCH_ASSOC);
 
-require_once('inc/header.inc.php');
+
 ?>
 <!--container-->
 <div class="container">
+<?php echo"<pre>"; var_dump($_SESSION); echo "</pre>"; ?>
 
   <div class="row">
 

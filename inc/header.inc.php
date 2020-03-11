@@ -50,10 +50,11 @@
             <li class="nav-item">
                 <a class="nav-link" href="<?= URL ?>panier.php">Panier <span class="badge badge-info"><?= $nbProduct ?></span></a>
             </li>
-            </ul>
+    </ul>
 
 
             <?php if(connecteAdmin()): // accés administrateur ?>
+            
             <ul class="navbar-nav  my-2 my-lg-0">
                 <li class="nav-item dropdown">
                     <a class="nav-link dropdown-toggle" href="#" id="dropdown04" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Administration</a>
@@ -68,6 +69,7 @@
                 </li>
             </ul>
             <?php endif; ?>          
+            
             <ul class="navbar-nav  my-2 my-lg-0">
                 <li class="nav-item">
                     <a class="nav-link" href="<?= URL ?>profil.php" id ="dropdown01" ><i class="fas fa-user" style="color:#fffff;"></i>&nbsp; Profil</a>
@@ -76,8 +78,13 @@
                         <a class="nav-link" href="<?= URL ?>connexion.php?action=deconnexion">Deconnexion</a>
                     </div>
                 </li>
-           </ul>      
+           </ul>
+
+
+
         <?php else: // visiteur non connécté et non inscrit ?>
+
+
         <ul class="navbar-nav mr-auto mt-2  mt-lg-0"> 
             <?php 
             if(isset($_SESSION['panier']))
@@ -105,6 +112,9 @@
             </li>
         </ul>
         <?php endif; ?>
+    
+    
+    
     </div>
     </nav>
     <main class="container-fluid" style="min-height:890px">
