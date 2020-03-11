@@ -13,7 +13,6 @@ require_once('inc/header.inc.php');
 ?>
 <!--container-->
 <div class="container">
-<?php echo"<pre>"; var_dump($_SESSION); echo "</pre>"; ?>
 
   <div class="row">
 
