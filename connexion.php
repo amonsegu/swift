@@ -72,8 +72,8 @@ require_once('inc/header.inc.php');
 <h1 class="display-4 text-center mt-2">Connexion</h1><hr>
 
     <?php if(isset($ErrorConnect)) echo $ErrorConnect; ?>
-    <div class="container col-5 justify-content-center bg-secondary text-white rounded p-5">
-    <form method="post" class="col-md-6 mx-auto">
+    <div class="container col-md-8 col-lg-3 justify-content-center bg-secondary text-white rounded p-5">
+    <form method="post" class="col-md-12 mx-auto">
         <div class="form-group">
             <label for="email_pseudo">Email ou Pseudo</label>
             <input type="text" class="form-control" id="email_pseudo" name="email_pseudo">
