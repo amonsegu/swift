@@ -148,9 +148,9 @@ si il y a action et ajout dans L'URL on lance le formulaire OU si dans l'url il 
 ?>
 
 <!---Formulaire table salle --->
-
+<div class="container col-5 justify-content-center rounded border p-3 mt-2 mb-2">
 <h3 class="display-4 text-center mt-2"><?= ucfirst($_GET['action']) ?> Produit</h3>
-<form class="container" action="#" method="POST" enctype="multipart/form-data" style="margin-top:35px; margin-bottom:35px;">
+<form action="#" method="POST" enctype="multipart/form-data" style="margin-top:35px; margin-bottom:35px;">
 <?php if (isset($validInsert)) echo $validInsert ?>
 
 <!--Requete de d'affichage salle-->
@@ -165,7 +165,6 @@ si il y a action et ajout dans L'URL on lance le formulaire OU si dans l'url il 
 
         <label for="id_salle" style="margin-top:20px">salle</label>
         <select id="id_salle" name="id_salle" class="form-control">
-
            <?php
                 while($cat = $datasalle->fetch(PDO::FETCH_ASSOC)):
             ?>
@@ -174,15 +173,13 @@ si il y a action et ajout dans L'URL on lance le formulaire OU si dans l'url il 
                 echo' nom : ' . $cat['titre'] . '    '. $cat['adresse'] .  '    '.  $cat['ville'] .  '    ' . $cat['cp'] . ' capacité : ' . $cat['capacite'] . '  catégorie :  ' . $cat['categorie'] ;
                 ?>
                 </option>
-            <?php endwhile; ?>  
-
-
-            
+            <?php endwhile; ?>        
         </select>
         </div>
 
 <!-- DATE ARRIVEE-->
 <?php $objDateTime = new DateTime('NOW'); ?>
+
 <div class="form-group">        
         <label style="margin-top:20px" for="date_arrivee" >Date d'arrivée</label>
         <input type="datetime-local" class="form-control" id="date_arrivee"  name="date_arrivee">
@@ -210,10 +207,13 @@ si il y a action et ajout dans L'URL on lance le formulaire OU si dans l'url il 
             <option value="reservation"> reservation</option>
         </select>
         </div>
-
+        
+        <div class="text-center">
         <button type="submit" class="btn btn-primary" style="margin:5px 0px 0px 0px"><?= ucfirst($_GET['action']) ?> Produit</button>
-
+        </div>
 </form>
+</div>
+
 </main>
 <?php 
 //fin de la condition d'affichage du formulaire 002

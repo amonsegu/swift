@@ -79,10 +79,10 @@ require_once('inc/header.inc.php');
 //echo '<pre>'; print_r($_SESSION); echo '</pre>';
 ?>
 
-<h1 class="display-4 text-center mt-2">Profil</h1><hr>
+<h1 class="display-4 text-center mt-2">Votre Profil</h1><hr>
 
-<table class="col-md-6 mx-auto table table-dark text-center rounded">
-
+<table class="col-md-6 mx-auto table table-striped  table-dark text-center stripped rounded-lg">
+    
     <?php foreach($_SESSION['membre'] as $key => $value): ?>
 
         <?php if($key != 'statut' && $key != 'id_membre'): ?>
@@ -148,7 +148,9 @@ require_once('inc/header.inc.php');
     </div>
 </div>
 
-<button type="submit" class="btn btn-dark">Inscription</button>
+<div class="text-center">
+<button type="submit" class="btn btn-dark mb-3">Inscription</button>
+</div>
 </form>
 </div>
 

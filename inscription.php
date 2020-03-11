@@ -84,52 +84,58 @@ require_once("inc/header.inc.php");
 
 
 <h1 class="display-4 text-center mt-2">Inscription</h1><hr>
+<div class="container col-5 justify-content-center">
+    <form method="post">
 
-<form method="post">
-<div class="form-row">
-    <div class="form-group col-md-12">
-    <label for="pseudo">Pseudo</label>
-    <input type="text" class="form-control" id="pseudo" name="pseudo">
-    <?php if(isset($errorPseudo)) echo $errorPseudo ?>
+        <div class="form-group">
+        <label for="civilite">Civilité</label>
+        <select id="civilite" name="civilite" class="form-control">
+            <option value="f">Madame</option>
+            <option value="m">Monsieur</option>
+        </select>
+        </div>
+      
+        <div class="form-group">
+        <label for="nom">Nom</label>
+        <input type="text" class="form-control" id="nom" name="nom">
+        </div>
+
+        <div class="form-group">
+        <label for="prenom">Prénom</label>
+        <input type="text" class="form-control" id="prenom" name="prenom">
+        </div>
+
+        <div class="form-group ">
+        <label for="pseudo">Pseudo</label>
+        <input type="text" class="form-control" id="pseudo" name="pseudo">
+        <?php if(isset($errorPseudo)) echo $errorPseudo ?>
+        </div>
+
+
+        <div class="form-group">
+        <label for="email">Email</label>
+        <input type="text" class="form-control" id="email" name="email">
+        <?php if(isset($errorEmail)) echo $errorEmail ?>
+        </div>
+
+
+        <div class="form-group ">
+        <label for="mdp">Mot de passe</label>
+        <input type="password" class="form-control" id="mdp" name="mdp">
+        <?php if(isset($errorMdp)) echo $errorMdp ?>
+        </div>
+
+        <div class="form-group ">
+        <label for="mdp_confirm">Confirmer mot de passe</label>
+        <input type="password" class="form-control" id="mdp_confirm" name="mdp_confirm">
+        </div>
+
+    <div class="text-center">
+    <button type="submit" class="btn btn-info">Inscription</button>
     </div>
+
+    </form>
 </div>
-<div class="form-row">
-    <div class="form-group col-md-6">
-    <label for="mdp">Mot de passe</label>
-    <input type="password" class="form-control" id="mdp" name="mdp">
-    <?php if(isset($errorMdp)) echo $errorMdp ?>
-    </div>
-    <div class="form-group col-md-6">
-    <label for="mdp_confirm">Confirmer mot de passe</label>
-    <input type="password" class="form-control" id="mdp_confirm" name="mdp_confirm">
-    </div>
-</div>
-<div class="form-row">
-    <div class="form-group col-md-6">
-    <label for="civilite">Civilité</label>
-    <select id="civilite" name="civilite" class="form-control">
-        <option value="f">Madame</option>
-        <option value="m">Monsieur</option>
-    </select>
-    </div>
-    <div class="form-group col-md-6">
-    <label for="prenom">Prénom</label>
-    <input type="text" class="form-control" id="prenom" name="prenom">
-    </div>
-</div>
-<div class="form-row">
-    <div class="form-group col-md-6">
-    <label for="email">Email</label>
-    <input type="text" class="form-control" id="email" name="email">
-    <?php if(isset($errorEmail)) echo $errorEmail ?>
-    </div>
-    <div class="form-group col-md-6">
-    <label for="nom">Nom</label>
-    <input type="text" class="form-control" id="nom" name="nom">
-    </div>
-</div>
-<button type="submit" class="btn btn-dark">Inscription</button>
-</form>
 
 <?php 
 require_once("inc/footer.inc.php");

@@ -232,11 +232,11 @@ si il y a action et ajout dans L'URL on lance le formulaire OU si dans l'url il 
 
 
 ?>
-
+<div class="container col-6 mt-4 mb-4 justify-content-center border rounded p-2">
 <!---Formulaire  salle --->
 
 <h3 class="display-4 text-center mt-2"><?= ucfirst($_GET['action']) ?> Salles</h3>
-<form class="container" action="#" method="POST" enctype="multipart/form-data" style="margin-top:35px; margin-bottom:35px;">
+<form  action="#" method="POST" enctype="multipart/form-data" style="margin-top:35px; margin-bottom:35px;">
 <?php if (isset($validInsert)) echo $validInsert ?>
     
 <!-- TITRE DE LA SALLE-->
@@ -323,11 +323,11 @@ si il y a action et ajout dans L'URL on lance le formulaire OU si dans l'url il 
             <option value="formation"  <?php if(isset($categorie) && $categorie == 'formation') echo 'selected'?>>formation</option>
         </select>
 </div>
-
+        <div class="text-center">
         <button type="submit" class="btn btn-primary" style="margin:5px 0px 0px 0px"><?= ucfirst($_GET['action']) ?> Salle</button>
-
+       </div>
 </form>
-
+</div>
 
 </main>
 <?php 

@@ -72,7 +72,7 @@ require_once('inc/header.inc.php');
 <h1 class="display-4 text-center mt-2">Connexion</h1><hr>
 
     <?php if(isset($ErrorConnect)) echo $ErrorConnect; ?>
-
+    <div class="container col-5 justify-content-center bg-secondary text-white rounded p-5">
     <form method="post" class="col-md-6 mx-auto">
         <div class="form-group">
             <label for="email_pseudo">Email ou Pseudo</label>
@@ -82,8 +82,11 @@ require_once('inc/header.inc.php');
             <label for="mdp">Mot de passe</label>
             <input type="password" class="form-control" id="mdp" name="mdp">
         </div>
-        <button type="submit" class="btn btn-dark">Connexion</button>
+        <div class="text-center">
+        <button type="submit" class="btn bg-info">Connexion</button>
+        </div>
     </form>
+</div>
 
 <?php 
 require_once('inc/footer.inc.php');

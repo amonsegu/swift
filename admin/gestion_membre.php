@@ -169,9 +169,9 @@ si il y a action et ajout dans L'URL on lance le formulaire OU si dans l'url il 
 ?>
 
 <!---Formulaire table salle --->
-
+<div class="container col-5 justify-content-center bg-secondary text-white rounded p-4 mt-5 mb-5">
 <h3 class="display-4 text-center mt-2"><?= ucfirst($_GET['action']) ?> Membre</h3>
-<form class="container" action="#" method="POST" enctype="multipart/form-data" style="margin-top:35px; margin-bottom:35px;">
+<form action="#" method="POST" enctype="multipart/form-data" style="margin-top:35px; margin-bottom:35px;">
 <?php if (isset($validInsert)) echo $validInsert ?>
     
 <!-- PSEUDO-->
@@ -184,7 +184,7 @@ si il y a action et ajout dans L'URL on lance le formulaire OU si dans l'url il 
 
         <div class="form-group">
         <label for="mdp">Mot de passe</label>
-        <input type="password" class="form-control" id="mdp" name="mdp" value="<?php if(isset($mdp)) echo ("$mdp") ?> ">
+        <input type="password" class="form-control" id="mdp" name="mdp" value=" <?php if(isset($mdp)) echo ("$mdp") ?> ">
         </div>
 
 
@@ -214,13 +214,11 @@ si il y a action et ajout dans L'URL on lance le formulaire OU si dans l'url il 
             <option value="m"  <?php if(isset($civilite) && $civilite == "m") echo 'selected'?>> Homme</option>
         </select>
         </div>
-
-
-
-
+        <div class="text-center">
         <button type="submit" class="btn btn-primary" style="margin:5px 0px 0px 0px"><?= ucfirst($_GET['action']) ?> Membre</button>
-
+        </div>
 </form>
+</div>
 
 
 </main>
