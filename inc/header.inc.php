@@ -10,10 +10,7 @@
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/fancyapps/fancybox@3.5.7/dist/jquery.fancybox.min.css" />
     <link href="https://use.fontawesome.com/releases/v5.0.7/css/all.css" rel="stylesheet" >
     <title>Switch location bureau & salle</title>
-    <script type="text/javascript" src="inc/js/showproductville"></script>
-    <script type="text/javascript" src="inc/js/showproductcp"></script>
-    <script type="text/javascript" src="inc/js/showproductcat"></script>
-    <script type="text/javascript" src="inc/js/showproductcap"></script>
+
 </head>
 
 
@@ -28,7 +25,6 @@
     <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarsExample04" aria-controls="navbarsExample04" aria-expanded="false" aria-label="Toggle navigation">
         <span class="navbar-toggler-icon"></span>
     </button>
-
     <div class="collapse navbar-collapse" id="navbarsExample04">
         
 
@@ -49,6 +45,10 @@
             
             <li class="nav-item">
                 <a class="nav-link" href="<?= URL ?>panier.php">Panier <span class="badge badge-info"><?= $nbProduct ?></span></a>
+            </li>
+
+            <li class="nav-item active">
+                <a class="nav-link" href="<?= URL ?>contact.php">Contact</a>
             </li>
     </ul>
 
@@ -99,6 +99,9 @@
             
             <li class="nav-item">
                 <a class="nav-link" href="<?= URL ?>panier.php">Panier <span class="badge badge-info"><?= $nbProduct ?></span></a>
+            </li>
+            <li class="nav-item active">
+                <a class="nav-link" href="<?= URL ?>contact.php">Contact</a>
             </li>
             
         </ul>

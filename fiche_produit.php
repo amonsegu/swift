@@ -104,7 +104,7 @@ $MapCoordsUrl = $cp.'+'.$ville_url.'+'.$adresse_url; //url_encode : encodage pou
 ?>
  
 <div class="block overflow-hidden">
-    <iframe id="frame" width="350" height="250" src="http://maps.google.fr/maps?q=<?php echo $MapCoordsUrl; ?>&amp;t=h&amp;output=embed" 
+    <iframe id="frame" width="350" height="250" src="http://maps.google.fr/maps?q=<?php echo $MapCoordsUrl; ?>&amp;t=&amp;output=embed" 
     frameborder="0" scrolling="no" marginheight="0" marginwidth="20" ></iframe>
 </div>
     

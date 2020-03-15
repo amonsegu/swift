@@ -8,9 +8,11 @@ require_once('inc/header.inc.php');
     ON produit.id_salle = salle.id_salle
     ORDER BY produit.id_produit;");
     $produits = $data->fetchALL(PDO::FETCH_ASSOC);
-
-
 ?>
+    <script type="text/javascript" src="inc/js/showproductville"></script>
+    <script type="text/javascript" src="inc/js/showproductcp"></script>
+    <script type="text/javascript" src="inc/js/showproductcat"></script>
+    <script type="text/javascript" src="inc/js/showproductcap"></script>
 <!--container-->
 <div class="container">
 
